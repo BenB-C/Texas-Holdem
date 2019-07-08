@@ -4,16 +4,18 @@ export default class Hand{
   constructor(cards){
     // this.cards = cards;
     this.cards = []
-    this.cards.push(new Card('4', 'heart'));
-    this.cards.push(new Card('7', 'heart'));
-    this.cards.push(new Card('6', 'heart'));
-    this.cards.push(new Card('5', 'heart'));
-    this.cards.push(new Card('2', 'heart'));
+    this.cards.push(new Card(cards[0], 'heart'));
+    this.cards.push(new Card(cards[1], 'heart'));
+    this.cards.push(new Card(cards[2], 'heart'));
+    this.cards.push(new Card(cards[3], 'heart'));
+    this.cards.push(new Card(cards[4], 'heart'));
 
 
     this.counts = []
     this.message = "None";
     this.bestHand = [];
+    this.handRank = 0;
+    this.winner = false;
     this.getCounts();
   }
 
