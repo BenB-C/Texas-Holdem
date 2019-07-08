@@ -1,86 +1,140 @@
 import Card from './Card.js';
+import Hand from './Hand.js'
 
 //Author: Ben Martinson
 
 export default class Hands{
-  constructor(){
+  constructor(arrOfHands){
 
-    this.hands = [[this.find3Pair, "3 of a kind"],  [this.findPairs, "Pair"], [this.findHighCard, "High Card"]];
-    let cards = []
-    cards.push(new Card('2', 'heart'));
-    cards.push(new Card('2', 'heart'));
-    cards.push(new Card('3', 'heart'));
-    cards.push(new Card('4', 'heart'));
-    cards.push(new Card('5', 'heart'));
+    this.arrOfHands = []
+    this.arrOfHands.push(new Hand([1,2,3,4,5]));
+    this.arrOfHands.push(new Hand([2,2,3,4,5]));
+    this.arrOfHands.push(new Hand([2,3,3,3,1]));
+    this.arrOfHands.push(new Hand([2,2,2,1,1]));
+    this.arrOfHands.push(new Hand([4,4,4,1,1]));
+    this.arrOfHands.push(new Hand([3,3,3,4,4]));
 
-    this.bestHand;
-    this.message = this.findBestHand(cards);
-    console.log(this.message, this.bestHand);
+    this.findFullHouse = this.findFullHouse.bind(this);
+    this.find4Kind = this.find4Kind.bind(this);
+    this.find3Pair = this.find3Pair.bind(this);
+    this.find2Pair = this.find2Pair.bind(this);
+    this.findPair = this.findPair.bind(this);
+    this.findHighCard = this.findHighCard.bind(this);
+
+    this.hands = [[this.findFullHouse, "Full House"],[this.find4Kind, "4 of a Kind"] ,[this.find3Pair, "3 of a Kind"],
+                  [this.find2Pair, "Two Pair"], [this.findPair, "Pair"], [this.findHighCard, "High Card"]];
+
+
+    this.findBestHands();
   }
 
-  findBestHand(cards){
-    this.hands.forEach(function(hand, idx){
-      let result = hand[0](cards);
-      console.log();
-      let message = hand[1];
+
+  findBestHand(hand){
+    for (let i = 0; i < this.hands.length; i++) {
+      let result = this.hands[i][0](hand);
+
+      hand.handRank = i;
+      hand.message = this.hands[i][1];
       if(result.length !== 0){
-        this.bestHand = result;
-        if(message === "Pair"){
-          if(this.checkFourOfKind(result)){
-            message = "Four of a Kind";
-          } else if(result.length === 4){
-            message = "Two Pair";
-          }
-        }
-        return message;
+        hand.bestHand = result;
+        return;
       }
-    }, this)
+    }
   }
 
-  findBestHands(cards1, cards2){}
+  findPair(hand){
+    for (let i = 0; i < hand.counts.length; i++) {
+      if(hand.counts[i] === 2){
+        return [i, i];
+      }
+    }
+    return [];
+  }
 
-  findPairs(cards){
-    let pairs = []
+  find2Pair(hand){
+    let firstPair;
+    let secondPair;
 
-    for (let i = 0; i < cards.length; i++) {
-      for (var x = i+1; x < cards.length; x++) {
-        if(cards[i] === cards[x]){
-          //pair found
-          pairs.push(cards[i])
-          pairs.push(cards[x])
+    for (let i = 0; i < hand.counts.length; i++) {
+      if(hand.counts[i] === 2){
+        if(firstPair){
+          return [firstPair, [i, i]];
+        } else {
+          firstPair = [i, i];
         }
       }
     }
-    return pairs;
+    return [];
   }
 
-  checkFourOfKind(pairs){
-    return pairs[0].value === pairs[1].value
-  }
-
-
-  find3Pair(cards){
-    let pairs = [];
-    for (let i = 0; i < cards.length; i++) {
-      for (let x = i+1; x < cards.length; x++) {
-        for (let r = x+1; r < cards.length; r++) {
-          if(cards[i] === cards[x] && cards[i] === cards[r]){
-            //pair found
-            pairs.push(cards[i])
-            pairs.push(cards[x])
-            pairs.push(cards[r])
-          }
-        }
+  find3Pair(hand){
+    for (var i = 0; i < hand.counts.length; i++) {
+      if(hand.counts[i] === 3){
+        return [i, i, i];
       }
     }
-    return pairs;
+    return [];
   }
 
-  findHighCard(cards){
+  find4Kind(hand){
+    for (var i = 0; i < hand.counts.length; i++) {
+      if(hand.counts[i] === 4){
+        return [i, i, i, i];
+      }
+    }
     return [];
   }
 
 
+  findBestHands(){
+    let handResults = []
+    let bestHandSoFar = 10; //Lower is better
+    let highestHandIdx = -1; //To reset winning to false when a higher hand is found
 
+    this.arrOfHands.forEach(function(hand, idx){
+      this.findBestHand(hand);
+      if(hand.handRank <= bestHandSoFar){
+        if(hand.handRank === bestHandSoFar){
+          if(!this.dealWithSameHand(hand, this.arrOfHands[highestHandIdx]))
+            return;
+        }
+        //
+        bestHandSoFar = hand.handRank;
+        if(highestHandIdx !== -1){
+          this.arrOfHands[highestHandIdx].winner = false;
+        }
+        highestHandIdx = idx;
+        hand.winner = true;
+      }
+    }, this)
+    console.log(this.arrOfHands);
+  }
+
+  dealWithSameHand(newHand, OldHand){
+    if(newHand.handRank === 0 || newHand.handRank === 1 || newHand.handRank === 2 || newHand.handRank === 4 || newHand.handRank === 5)
+      return (newHand.bestHand[0] > OldHand.bestHand[0])
+
+    if(newHand.handRank === 0){
+
+    }
+  }
+
+
+  findFullHouse(hand){
+    let threePair = this.find3Pair(hand);
+    let pair = this.findPair(hand);
+    if(threePair.length && pair.length)
+      return [threePair, pair];
+    return [];
+  }
+
+
+  findHighCard(hand){
+    for (var i = hand.counts.length; i > 0; i--) {
+      if(hand.counts[i] > 0)
+        return i;
+    }
+    return [];
+  }
 
 }
