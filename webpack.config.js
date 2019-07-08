@@ -14,13 +14,13 @@ module.exports = {
     contentBase: './dist'
   },
   plugins: [
-  new UglifyJsPlugin({ sourceMap: true }),
-   new CleanWebpackPlugin(['dist']),
-   new HtmlWebpackPlugin({
-     title: 'template',
-     template: './src/index.html',
-     inject: 'body'
-   })
+    new UglifyJsPlugin({ sourceMap: true }),
+    new CleanWebpackPlugin(['dist']),
+    new HtmlWebpackPlugin({
+      title: 'template',
+      template: './src/index.html',
+      inject: 'body'
+    })
   ],
   module: {
     rules: [
@@ -33,18 +33,15 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/
+        exclude: [
+          /node_modules/,
+          /spec/
+        ],
+        loader: "babel-loader",
+        options: {
+          presets: ['es2015']
+        }
       }
     ]
-  },
-	test: /\.js$/,
-	exclude: [
-  	/node_modules/,
-  	/spec/
-	],
-	loader: "babel-loader",
-	options: {
-  	presets: ['es2015']
-	}
-}
+  }
 };
