@@ -2,7 +2,7 @@
 
 #### Epicodus JavaScript - Team Week Project - 2019.07.08
 
-#### By Ben Bennett-Cauchon
+#### By Ben Bennett-Cauchon, Gavin Kimberlin, Josh Horgen, Ben Martinson
 
 ## Description
 
