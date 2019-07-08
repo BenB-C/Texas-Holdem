@@ -3,5 +3,4 @@ import $ from 'jquery';
 
 $(document).ready(function(){
   let hand = new Hands();
-
 })
