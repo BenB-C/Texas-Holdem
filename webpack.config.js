@@ -21,7 +21,7 @@ module.exports = {
      template: './src/index.html',
      inject: 'body'
    })
- ],
+  ],
   module: {
     rules: [
       {
@@ -37,7 +37,6 @@ module.exports = {
       }
     ]
   },
-    {                         
 	test: /\.js$/,
 	exclude: [
   	/node_modules/,
@@ -47,5 +46,5 @@ module.exports = {
 	options: {
   	presets: ['es2015']
 	}
-    }
+}
 };
