@@ -1,4 +1,4 @@
-import { MakeBet } from ./betting.js;
+import { Deck } from ./deck.js;
 export default class Player {
   constructor () {
     this.turn = false;
@@ -6,5 +6,5 @@ export default class Player {
     this.chips = [];
     this.bet = 0;
   };
-  
+
 }
