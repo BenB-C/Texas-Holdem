@@ -23,11 +23,9 @@ export default class Hand{
     for (var i = 0; i < 13; i++) {
       this.counts.push(0);
     }
-    console.log(this.counts);
     this.cards.forEach(function(card, idx){
       this.counts[card.value]++
     }, this)
-    console.log(this.counts);
   }
 
 }

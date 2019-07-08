@@ -9,9 +9,10 @@ export default class Hands{
     this.arrOfHands = []
     this.arrOfHands.push(new Hand([1,2,3,4,5]));
     this.arrOfHands.push(new Hand([2,2,3,4,5]));
-    this.arrOfHands.push(new Hand([2,2,3,3,5]));
-    this.arrOfHands.push(new Hand([2,2,2,2,5]));
-    this.arrOfHands.push(new Hand([2,3,3,4,5]));
+    this.arrOfHands.push(new Hand([2,3,3,3,1]));
+    this.arrOfHands.push(new Hand([2,2,2,1,1]));
+    this.arrOfHands.push(new Hand([4,4,4,1,1]));
+    this.arrOfHands.push(new Hand([3,3,3,4,4]));
 
     this.findFullHouse = this.findFullHouse.bind(this);
     this.find4Kind = this.find4Kind.bind(this);
@@ -92,7 +93,12 @@ export default class Hands{
 
     this.arrOfHands.forEach(function(hand, idx){
       this.findBestHand(hand);
-      if(hand.handRank < bestHandSoFar){
+      if(hand.handRank <= bestHandSoFar){
+        if(hand.handRank === bestHandSoFar){
+          if(!this.dealWithSameHand(hand, this.arrOfHands[highestHandIdx]))
+            return;
+        }
+        //
         bestHandSoFar = hand.handRank;
         if(highestHandIdx !== -1){
           this.arrOfHands[highestHandIdx].winner = false;
@@ -104,11 +110,19 @@ export default class Hands{
     console.log(this.arrOfHands);
   }
 
+  dealWithSameHand(newHand, OldHand){
+    if(newHand.handRank === 0 || newHand.handRank === 1 || newHand.handRank === 2 || newHand.handRank === 4 || newHand.handRank === 5)
+      return (newHand.bestHand[0] > OldHand.bestHand[0])
+
+    if(newHand.handRank === 0){
+
+    }
+  }
+
 
   findFullHouse(hand){
     let threePair = this.find3Pair(hand);
     let pair = this.findPair(hand);
-    console.log(threePair, pair);
     if(threePair.length && pair.length)
       return [threePair, pair];
     return [];
