@@ -17,19 +17,19 @@ export class Game {
           let nextCard = this.deck.nextCard();
           player.hand.push(this.deck.nextCard());
         }, this);
-      } else {
-        let nextCard = this.deck.nextCard();
-        this.players.forEach(player => {
-          player.hand.push(nextCard);
+        this.players.forEach((player, i) => {
+          console.log("player " + i + "was dealt " + player.hand.toString());
         });
-        this.communityCards.push(nextCard);
+      } else {
+        this.communityCards.push(this.deck.nextCard());
       }
     }
-    console.log("CommunityCards", communityCards);
+    console.log("CommunityCards", communityCards.toString());
+    this.players.forEach(player => console.log(player.hand.toString()));
   }
 
   nextCard() {
-    let randomIndex = Math.floor(Math.round()*this.cards.length);
+    let randomIndex = Math.floor(Math.round() * this.cards.length);
     return this.cards.splice(randomIndex, 1)[0];
   }
 
