@@ -29,7 +29,7 @@ while (!gameOver) {
   gameOver = true;
 }
 $(document).ready(function(){
-
+  let hands = new Hands([]);
 })
 
 

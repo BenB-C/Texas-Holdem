@@ -7,23 +7,17 @@ export default class Hands{
   constructor(arrOfHands){
 
     this.arrOfHands = []
-    this.arrOfHands.push(new Hand([1,2,3,4,5]));
-    this.arrOfHands.push(new Hand([2,2,3,4,5]));
-    this.arrOfHands.push(new Hand([2,3,3,3,1]));
-    this.arrOfHands.push(new Hand([2,2,2,1,1]));
-    this.arrOfHands.push(new Hand([4,4,4,1,1]));
-    this.arrOfHands.push(new Hand([3,3,3,4,4]));
+    // this.arrOfHands.push(new Hand([2,2,2,"King","Ace"]));
+    this.arrOfHands.push(new Hand([2,2,5,10,10]));
+    this.arrOfHands.push(new Hand([3,3,5,10,10]));
+    // this.arrOfHands.push(new Hand([3,3,3,4,4]));
 
     this.findFullHouse = this.findFullHouse.bind(this);
-    this.find4Kind = this.find4Kind.bind(this);
-    this.find3Pair = this.find3Pair.bind(this);
-    this.find2Pair = this.find2Pair.bind(this);
-    this.findPair = this.findPair.bind(this);
-    this.findHighCard = this.findHighCard.bind(this);
+    this.findStraightFlush = this.findStraightFlush.bind(this);
 
-    this.hands = [[this.findFullHouse, "Full House"],[this.find4Kind, "4 of a Kind"] ,[this.find3Pair, "3 of a Kind"],
+    this.hands = [[this.findStraightFlush, "Straight-Flush"],[this.findFlush, "Flush"],[this.findStraight, "Straight"],
+                  [this.findFullHouse, "Full House"],[this.find4Kind, "4 of a Kind"] ,[this.find3Pair, "3 of a Kind"],
                   [this.find2Pair, "Two Pair"], [this.findPair, "Pair"], [this.findHighCard, "High Card"]];
-
 
     this.findBestHands();
   }
@@ -40,6 +34,29 @@ export default class Hands{
         return;
       }
     }
+  }
+
+  findStraightFlush(hand){
+    return this.findFlush(hand) && this.findStraight(hand)
+  }
+
+  findFlush(hand){
+    let suit = hand.cards[0].suit;
+    for (let i = 1; i < hand.cards.length; i++){
+      if(hand.cards[i].suit !== suit){
+        return [];
+      }
+    }
+    return hand.cards;
+  }
+
+  findStraight(hand){
+    //hand must be sorted;
+    for (let i = 1; i < hand.cards.length; i++) {
+      if(hand.cards[i].value - hand.cards[i-1].value !== 1)
+        return [];
+    }
+    return hand.cards;
   }
 
   findPair(hand){
@@ -95,10 +112,12 @@ export default class Hands{
       this.findBestHand(hand);
       if(hand.handRank <= bestHandSoFar){
         if(hand.handRank === bestHandSoFar){
-          if(!this.dealWithSameHand(hand, this.arrOfHands[highestHandIdx]))
-            return;
+          if(!this.dealWithSameHand(hand, this.arrOfHands[highestHandIdx])){
+            console.log('here');
+            return; //Same hand, but the previous had a higher card
+          }
         }
-        //
+        //new hand is highest rank so far
         bestHandSoFar = hand.handRank;
         if(highestHandIdx !== -1){
           this.arrOfHands[highestHandIdx].winner = false;
@@ -110,13 +129,48 @@ export default class Hands{
     console.log(this.arrOfHands);
   }
 
-  dealWithSameHand(newHand, OldHand){
-    if(newHand.handRank === 0 || newHand.handRank === 1 || newHand.handRank === 2 || newHand.handRank === 4 || newHand.handRank === 5)
-      return (newHand.bestHand[0] > OldHand.bestHand[0])
+  dealWithSameHand(newHand, oldHand){
+    let newBest = newHand.bestHand;
+    let prevBest = oldHand.bestHand;
 
-    if(newHand.handRank === 0){
-
+    //if full house draw, check the three kind first, then the pair
+    if(newHand.handRank === 2){
+      if(newBest[0][0] !== prevBest[0][0]){
+        return newBest[0][0] > prevBest[0][0]
+      }
+      else if(newBest[1][0] !== prevBest[1][0]){
+        return newBest[1][0] > prevBest[1][0]
+      } else {
+        //must be draw
+        newHand.draw = true;
+        oldHand.draw = true;
+        return true;
+      }
     }
+
+    //check for 2 pairs
+    if(newHand.handRank === 6){
+      
+    }
+
+    //check for tieBreakers (high cards of best hand)
+    if(newHand.handRank !== this.hands.length-1){
+      if(newBest[newBest.length-1].value !== prevBest[prevBest.length-1].value){
+        return newBest[newBest.length-1].value > prevBest[prevBest.length-1].value
+      }
+    }
+
+
+    //if got here, need to check for High cards
+    for(let i = newHand.cards.length-1; i >=0; --i){
+       if(newHand.cards[i].value !== oldHand.cards[i].value)
+        return newHand.cards[i].value > oldHand.cards[i].value
+    }
+
+    //must be a draw
+    newHand.draw = true;
+    oldHand.draw = true;
+
   }
 
 
@@ -130,11 +184,7 @@ export default class Hands{
 
 
   findHighCard(hand){
-    for (var i = hand.counts.length; i > 0; i--) {
-      if(hand.counts[i] > 0)
-        return i;
-    }
-    return [];
+    return [hand.cards[hand.cards.length-1]];
   }
 
 }
