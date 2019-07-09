@@ -3,11 +3,11 @@ import Player from './players.js';
 
 export class Deck {
   constructor() {
-    this.values = ['ace', 'king', 'queen', 'jack'];
+    this.values = ['Ace', 'King', 'Queen', 'Jack'];
     for (let i = 2; i <= 10; i++) {
       this.values.push(i.toString());
     }
-    this.suits = ['heart', 'diamond', 'spade', 'club'];
+    this.suits = ['Hearts', 'Diamonds', 'Spades', 'Clubs'];
     this.cards = [];
     this.suits.forEach( suit =>{
       this.values.forEach( value => {

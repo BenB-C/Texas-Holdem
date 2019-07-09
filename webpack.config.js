@@ -49,9 +49,15 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'src/Assets/'
+              outputPath: 'Assets/'
             }
           }
+        ]
+      },
+      {
+        test:/\.html$/,
+        use: [
+          'html-loader'
         ]
       },
     ]
