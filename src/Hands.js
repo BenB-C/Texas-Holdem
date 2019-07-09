@@ -4,11 +4,11 @@ import Hand from './Hand.js'
 //Author: Ben Martinson
 
 export default class Hands{
-  constructor(arrOfHands){
+  constructor(){
 
     this.arrOfHands = []
     // this.arrOfHands.push(new Hand([2,2,2,"King","Ace"]));
-    this.arrOfHands.push(new Hand([2,2,5,10,10]));
+    this.arrOfHands.push(new Hand([3,3,6,10,10]));
     this.arrOfHands.push(new Hand([3,3,5,10,10]));
     // this.arrOfHands.push(new Hand([3,3,3,4,4]));
 
@@ -19,9 +19,35 @@ export default class Hands{
                   [this.findFullHouse, "Full House"],[this.find4Kind, "4 of a Kind"] ,[this.find3Pair, "3 of a Kind"],
                   [this.find2Pair, "Two Pair"], [this.findPair, "Pair"], [this.findHighCard, "High Card"]];
 
-    this.findBestHands();
+    this.arrOfHands = []
   }
 
+  findBestHands(arrOfHands){
+    this.arrOfHands = arrOfHands;
+    let handResults = []
+    let bestHandSoFar = 10; //Lower is better
+    let highestHandIdx = -1; //To reset winning to false when a higher hand is found
+
+    this.arrOfHands.forEach(function(hand, idx){
+      this.findBestHand(hand);
+      if(hand.handRank <= bestHandSoFar){
+        if(hand.handRank === bestHandSoFar){
+          if(!this.dealWithSameHand(hand, this.arrOfHands[highestHandIdx])){
+            console.log('here');
+            return; //Same hand, but the previous had a higher card
+          }
+        }
+        //new hand is highest rank so far
+        bestHandSoFar = hand.handRank;
+        if(highestHandIdx !== -1){
+          this.arrOfHands[highestHandIdx].winner = false;
+        }
+        highestHandIdx = idx;
+        hand.winner = true;
+      }
+    }, this)
+    console.log(this.arrOfHands);
+  }
 
   findBestHand(hand){
     for (let i = 0; i < this.hands.length; i++) {
@@ -103,31 +129,6 @@ export default class Hands{
   }
 
 
-  findBestHands(){
-    let handResults = []
-    let bestHandSoFar = 10; //Lower is better
-    let highestHandIdx = -1; //To reset winning to false when a higher hand is found
-
-    this.arrOfHands.forEach(function(hand, idx){
-      this.findBestHand(hand);
-      if(hand.handRank <= bestHandSoFar){
-        if(hand.handRank === bestHandSoFar){
-          if(!this.dealWithSameHand(hand, this.arrOfHands[highestHandIdx])){
-            console.log('here');
-            return; //Same hand, but the previous had a higher card
-          }
-        }
-        //new hand is highest rank so far
-        bestHandSoFar = hand.handRank;
-        if(highestHandIdx !== -1){
-          this.arrOfHands[highestHandIdx].winner = false;
-        }
-        highestHandIdx = idx;
-        hand.winner = true;
-      }
-    }, this)
-    console.log(this.arrOfHands);
-  }
 
   dealWithSameHand(newHand, oldHand){
     let newBest = newHand.bestHand;
@@ -140,21 +141,32 @@ export default class Hands{
       }
       else if(newBest[1][0] !== prevBest[1][0]){
         return newBest[1][0] > prevBest[1][0]
-      } else {
-        //must be draw
-        newHand.draw = true;
-        oldHand.draw = true;
-        return true;
       }
     }
 
-    //check for 2 pairs
-    if(newHand.handRank === 6){
-      
+    //check for 2 pairs, and find highest pair
+    else if(newHand.handRank === 6){
+      let maxPair = []
+      maxPair.push(0);
+      maxPair.push(0);
+      for (let i = 0; i < 2; i++) {
+        if(newBest[i][0] > maxPair[0]){
+          maxPair[0] = newBest[i][0]
+          maxPair[1] = 1;
+        }
+
+        if(prevBest[i][0] > maxPair[0]){
+          maxPair[0] = prevBest[i][0]
+          maxPair[1] = 0;
+        }
+      }
+
+      if(newBest[0][0] !== prevBest[0][0] || newBest[1][0] !== prevBest[1][0])
+        return maxPair[1];
     }
 
     //check for tieBreakers (high cards of best hand)
-    if(newHand.handRank !== this.hands.length-1){
+    else if(newHand.handRank !== this.hands.length-1){
       if(newBest[newBest.length-1].value !== prevBest[prevBest.length-1].value){
         return newBest[newBest.length-1].value > prevBest[prevBest.length-1].value
       }

@@ -21,7 +21,7 @@ export default class Hand{
     this.sortCards();
     console.log(this.cards);
   }
-
+  
   getCounts(){
     for (var i = 0; i < 15; i++) {
       this.counts.push(0);
