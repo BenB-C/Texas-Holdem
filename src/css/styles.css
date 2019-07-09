@@ -1,0 +1,30 @@
+body {
+  background-color: green;
+}
+/* .game {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 20% 20% 20% 20% 20%;
+} */
+
+.pot {
+  text-align: center;
+  padding-top: 150px;
+}
+.player-cards {
+  text-align: center;
+  padding-top: 100px;
+}
+
+.player-chips {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.computer-cards {
+  text-align: center;
+}
+.computer-chips {
+  text-align: center;
+  padding-top: 50px;
+}

@@ -1,29 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <link rel="stylesheet" href="css/styles.css">
     <meta charset="utf-8">
     <title>Poker</title>
   </head>
   <body>
-    <h1>Play Poker</h1>
-    <div class="computer-cards">
-      <p>computer cards</p>
+    <div class="container">
+      <h1>Play Poker</h1>
+
+      <div class="game">
+        <div class="computer-cards">
+          <p>computer cards</p>
+        </div>
+        <div class="computer-chips">
+          <p>computer chips</p>
+        </div>
+        <div class="pot">
+          <p>Pot</p>
+          <p id="pot"></p>
+        </div>
+        <div class="player-cards">
+          <p>player cards</p>
+          <p></p>
+        </div>
+        <div class="player-chips">
+          <p>player chips</p>
+        </div>
+        <button id="fold" type="button">Fold</button>
+        <button id="call" type="button">Call</button>
+        <button id="check" type="button">Check</button>
+        <button id="raise" type="button">Raise</button>
+      </div>
     </div>
-    <div class="computer-chips">
-      <p>computer chips</p>
-    </div>
-    <div class="pot">
-      <p>pot</p>
-    </div>
-    <div class="player-cards">
-      <p>player cards</p>
-    </div>
-    <div class="player-chips">
-      <p>player chips</p>
-    </div>
-    <button id="fold" type="button">Fold</button>
-    <button id="call" type="button">Call</button>
-    <button id="check" type="button">Check</button>
-    <button id="raise" type="button">Raise</button>
   </body>
 </html>

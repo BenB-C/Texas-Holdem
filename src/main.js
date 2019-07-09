@@ -1,4 +1,5 @@
 
+import './css/styles.css';
 import $ from 'jquery';
 import {Game} from './Game.js';
 import {Deck} from './Deck.js';
