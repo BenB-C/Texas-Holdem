@@ -46,10 +46,12 @@ export class Game {
 
   incTurn(){
     this.currentlyBettingIndex = (this.currentlyBettingIndex + 1) % this.players.length;
-    if(this.betsNeeded-- > 0){
-      this.takeBet(this.currentlyBettingIndex);
-    }
-    else{
+    if(this.betsNeeded > 0){
+      if (!this.players[this.currentlyBettingIndex].hasFolded){
+        this.betsNeeded--
+        this.takeBet(this.currentlyBettingIndex);
+      }
+    } else{
       this.resetBetting();
     }
   }
@@ -86,16 +88,22 @@ export class Game {
   handleCall(){
     //place bet equal to current bet
     console.log('bet Placed', this.currentBet);
-    this.players[this.currentlyBettingIndex].placeBet(this.currentBet)
-    this.pot += this.currentBet;
+    let bettingPlayer = this.players[this.currentlyBettingIndex];
+    let amountToCall = this.currentBet - bettingPlayer.bet;
+    bettingPlayer.placeBet(amountToCall);
+    this.pot += amountToCall;
   }
 
   handleRaise(amount){
     //place bet equal to bet + raise amount
     amount = 100;
-    this.betsNeeded = this.players.length;
+    let stillIn = 0;
+    // this.players.forEach(function())
+    this.betsNeeded = this.players.length-1;
     console.log('bet Placed', this.currentBet+amount);
-    this.players[this.currentlyBettingIndex].placeBet(this.currentBet + amount)
+    let bettingPlayer = this.players[this.currentlyBettingIndex];
+    let amountToCall = this.currentBet - bettingPlayer.bet;
+    bettingPlayer.placeBet(amountToCall + amount);
     this.currentBet += amount;
     this.pot += amount;
   }
