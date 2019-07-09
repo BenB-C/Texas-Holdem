@@ -18,11 +18,7 @@ export class Game {
           player.hand.push(this.deck.nextCard());
         }, this);
       } else {
-        let nextCard = this.deck.nextCard();
-        this.players.forEach(player => {
-          player.hand.push(nextCard);
-        });
-        this.communityCards.push(nextCard);
+        this.communityCards.push(this.deck.nextCard());
       }
     }
     console.log("CommunityCards", communityCards);
