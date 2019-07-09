@@ -17,15 +17,15 @@ for (let i = 0; i < numberOfPlayers; i++) {
 // Start game
 let game = new Game(players);
 game.dealCards(2, true);
-game.players.forEach((player, i) => {
-  console.log("Player " + i + " was dealt:" + player.hand);
-});
 
 game.takeBets();
+// flop
 game.dealCards(3);
 game.takeBets();
+// river
 game.dealCards(1);
 game.takeBets();
+// turn
 game.dealCards(1);
 game.takeBets();
 
