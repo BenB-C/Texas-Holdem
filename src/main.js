@@ -17,6 +17,7 @@ for (let i = 0; i < numberOfPlayers; i++) {
 // Start game
 let game = new Game(players);
 game.dealCards(2, true);
+// display player cards 
 
 game.takeBets();
 // flop
