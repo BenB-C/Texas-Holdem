@@ -1,3 +1,4 @@
+
 body {
   background-color: forestgreen;
   font-family: 'Signika Negative', sans-serif;
@@ -66,3 +67,8 @@ display: grid;
 grid-template-columns: 20% 20% 20% 20% 20%;
 grid-template-rows: 20% 20% 20% 20% 20%;
 } */
+
+.display-bet-buttons {
+  display: none;
+}
+
