@@ -6,8 +6,8 @@ export default class Player {
     this.chips = 2000;
     this.isComputer = true;
     this.bet = 0;
-
     this.hasFolded = false;
+    this.amountToBet = 0;
   };
 
   placeBet(amount) {

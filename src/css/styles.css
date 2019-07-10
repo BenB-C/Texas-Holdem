@@ -29,7 +29,7 @@ body {
   padding-top: 50px;
 }
 
-.display-bet-buttons {
+.display-bet-buttons, .start-game {
   text-align: center;
   margin-top: 40px;
 }
@@ -69,5 +69,5 @@ grid-template-rows: 20% 20% 20% 20% 20%;
 } */
 
 .display-bet-buttons {
-  /* display: none; */
+  display: none;
 }
