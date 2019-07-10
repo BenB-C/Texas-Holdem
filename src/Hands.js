@@ -7,11 +7,6 @@ export default class Hands{
   constructor(){
 
     this.arrOfHands = []
-    // this.arrOfHands.push(new Hand([2,2,2,"King","Ace"]));
-    this.arrOfHands.push(new Hand([3,3,6,10,10]));
-    this.arrOfHands.push(new Hand([3,3,5,10,10]));
-    // this.arrOfHands.push(new Hand([3,3,3,4,4]));
-
     this.findFullHouse = this.findFullHouse.bind(this);
     this.findStraightFlush = this.findStraightFlush.bind(this);
 
@@ -33,7 +28,7 @@ export default class Hands{
       if(hand.handRank <= bestHandSoFar){
         if(hand.handRank === bestHandSoFar){
           if(!this.dealWithSameHand(hand, this.arrOfHands[highestHandIdx])){
-            console.log('here');
+
             return; //Same hand, but the previous had a higher card
           }
         }
