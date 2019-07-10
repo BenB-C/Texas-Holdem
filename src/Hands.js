@@ -1,7 +1,7 @@
 import Card from './Card.js';
 import Hand from './Hand.js'
 
-//Author: Ben Martinson
+//Author: Ben "billy-bob" Martinson
 
 export default class Hands{
   constructor(arrOfHands){
