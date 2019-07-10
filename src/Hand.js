@@ -2,14 +2,7 @@ import Card from './Card.js'
 
 export default class Hand{
   constructor(cards){
-    this.cards = []
-    this.cards.push(new Card(cards[0], 'heart'));
-    this.cards.push(new Card(cards[1], 'diamond'));
-    this.cards.push(new Card(cards[2], 'heart'));
-    this.cards.push(new Card(cards[3], 'heart'));
-    this.cards.push(new Card(cards[4], 'heart'));
-
-
+    this.cards = cards;
     this.draw = false;
     this.counts = []
     this.message = "None";
@@ -21,7 +14,7 @@ export default class Hand{
     this.sortCards();
     console.log(this.cards);
   }
-  
+
   getCounts(){
     for (var i = 0; i < 15; i++) {
       this.counts.push(0);
@@ -34,12 +27,12 @@ export default class Hand{
 
   turnFaceIntoNums(){
     //convert face Card values into numbers to use for straight and sorting
-    const facesToNums = ["Jack", "Queen", "King", "Ace"];
+    const facesToNums = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"];
 
     this.cards.map(function(card){
       for (var i = 0; i < facesToNums.length; i++) {
         if(card.value === facesToNums[i]){
-          card.value = i+11;
+          card.value = i+2;
         }
       }
     })

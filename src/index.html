@@ -9,56 +9,56 @@
 <body>
   <div class="container">
     <h1 class ="pokerHeader">Play Poker</h1>
-  </form>
-  <div id="player1">
-    <div id="playerCards1">
-      <p>Computer cards</p>
-    </div>
-    <div id="playerChips1">
-      <p><img class="dealerChip" src="./assets/poker-chips.png" alt="dealerChip"><span id="comChips"></span></p>      <p>Bet: <span id="comBet">0</span></p>
-      <div id="dealer1">
-        <img class="dealerChip" src="./assets/dealer-chip.png" alt="dealerChip0">
+    <div id="player1">
+      <div id="playerCards1">
+        <p>Computer cards</p>
+      </div>
+      <div id="playerChips1">
+        <p><img class="dealerChip" src="./assets/poker-chips.png" alt="dealerChip"><span id="comChips"></span></p>      <p>Bet: <span id="comBet">0</span></p>
+        <div id="dealer1">
+          <img class="dealerChip" src="./assets/dealer-chip.png" alt="dealerChip0">
+        </div>
       </div>
     </div>
-  </div>
-  <div id="table">
-    <div id="tablePot">
-      <img class="pot" src="./assets/pot.svg" alt="Pot Value">
-      <p>Pot</p>
+    <div id="table">
+      <div id="tablePot">
+        <img class="pot" src="./assets/pot.svg" alt="Pot Value">
+        <p>Pot</p>
+      </div>
+      <div id="communityCards">
+        <p>Community cards</p>
+      </div>
     </div>
-    <div id="communityCards">
-      <p>Community cards</p>
+    <div id="player0">
+      <div id="dealer0">
+        <img class="dealerChip" src="./assets/dealer-chip.png" alt="dealerChip0">
+      </div>
+      <div id="playerCards0">
+        <p>Player cards</p>
+      </div>
+      <div id="playerChips0">
+        <p><img class="dealerChip" src="./assets/poker-chips.png" alt="dealerChip"><span id="playChips"></span></p>
+        <p>Bet: <span id="playBet">0</span></p>
+      </div>
     </div>
-  </div>
-  <div id="player0">
-    <div id="dealer0">
-      <img class="dealerChip" src="./assets/dealer-chip.png" alt="dealerChip0">
+    <form id="raiseForm">
+      <input id="raiseBet" type="number" class="form-control" placeholder="Place your bet!"><br>
+      <button id="submitBet" type="button" name="button" class="btn-btn-danger">Submit</button>
+    </form>
+    <div class="player-chips">
+      <p>player chips</p>
     </div>
-    <div id="playerCards0">
-      <p>Player cards</p>
+    <div class="show-winner">
+
     </div>
-    <div id="playerChips0">
-      <p><img class="dealerChip" src="./assets/poker-chips.png" alt="dealerChip"><span id="playChips"></span></p>
-      <p>Bet: <span id="playBet">0</span></p>
-    </div>
-  </div>
-  <form id="raiseForm">
-    <input id="raiseBet" type="number" class="form-control" placeholder="Place your bet!"><br>
-    <button id="submitBet" type="button" name="button" class="btn-btn-danger">Submit</button>
-  </form>
-  <form id="buttonForm">
-    <div id="buttonDiv">
+    <button id="start" class="start-game" type="button">Start Game</button>
+
+    <div class="display-bet-buttons">
       <button id="fold" class="bet-button" type="button">Fold</button>
+      <button id="raise" class="bet-button" type="button">Raise</button>
       <button id="call" class="bet-button" type="button">Call</button>
       <button id="check" class="bet-button" type="button">Check</button>
-      <button id="raise" class="bet-button" type="button">Raise</button>
     </div>
-    <!-- <div class="display-bet-buttons">
-      <button id="fold" class="bet-button" type="button">Fold</button>
-      <button id="raise" class="bet-button" type="button">Raise</button>
-      <button id="call" class="bet-button" type="button">Call</button>
-      <button id="check" class="bet-button" type="button">Check</button>
-    </div> -->
   </div>
 </body>
 </html>
