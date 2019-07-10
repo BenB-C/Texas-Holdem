@@ -1,5 +1,7 @@
 import {Deck} from './Deck.js';
 import { Player } from './players.js';
+import Hand from './Hand.js';
+import Hands from './Hands.js';
 import $ from 'jquery'
 
 export class Game {
@@ -123,55 +125,63 @@ export class Game {
   }
 
   getBestHand(playerIdx) {
-    let setsOfFiveCards = combinations(this.players[playerIdx].hand.concat(this.communityCards), 5);
-    console.log("setsOfFiveCards", setsOfFiveCards);
-    let hands = setsOfFive.map(setOfFiveCards => {
+    let player = this.players[playerIdx];
+    let setsOfFiveCards = [this.communityCards];
+    this.communityCards.forEach((communityCard, communityCardIdx) => {
+      player.hand.forEach((card, cardIdx) => {
+        let setOfFiveCards = [];
+        for (var i = 0; i < 5; i++) {
+          if (i === communityCardIdx) {
+            setOfFiveCards.push(player.hand[cardIdx]);
+          } else {
+            setOfFiveCards.push(this.communityCards[i]);
+          }
+        }
+        setsOfFiveCards.push(setOfFiveCards);
+      });
+    });
+    for (let i = 0; i < 5; i++) {
+      for (let j = i + 1; j < 5; j++) {
+        let setOfFiveCards = this.communityCards.map((communityCard, k) => {
+          if (k === i) {
+            return player.hand[0];
+          } else if (k === j) {
+            return player.hand[1];
+          } else {
+            return this.communityCards[k];
+          }
+        });
+        setsOfFiveCards.push(setOfFiveCards);
+      }
+    }
+    let hands = setsOfFiveCards.map(setOfFiveCards => {
       return new Hand(setOfFiveCards);
     });
-    console.log("hands", hands);
     let handsChecker = new Hands();
     handsChecker.findBestHands(hands);
+    let winningCards;
     handsChecker.arrOfHands.forEach(hand => {
       if (hand.winner) {
-        return hand;
+        winningCards = hand.cards;
       }
     });
+    return winningCards;
   }
 
   getWinner() {
     let winner = {};
-    let playersBestHands = this.players.map(player, i => {
-      return getBestHand(i);
+    let playersBestHands = this.players.map((player, i) => {
+      let bestHand = this.getBestHand(i);
+      return new Hand(bestHand);
     });
     let handsChecker = new Hands();
     handsChecker.findBestHands(playersBestHands);
-    let winnerIndexes []
-    handsChecker.arrOfHands.forEach(hand, i => {
-      if (hand.winner) {
+    let winnerIndexes = [];
+    handsChecker.arrOfHands.forEach((hand, i) => {
+      if (hand.winner || hand.draw) {
         winnerIndexes.push(i);
       }
     });
-    // TODO: generate winning message
-  }
-  // based on code from https://rosettacode.org/wiki/Combinations#JavaScript
-  combinations(arr, k){
-    let i,
-    subI,
-    ret = [],
-    sub,
-    next;
-    for(i = 0; i < arr.length; i++){
-        if(k === 1){
-            ret.push( [ arr[i] ] );
-        }else{
-            sub = combinations(arr.slice(i+1, arr.length), k-1);
-            for(subI = 0; subI < sub.length; subI++ ){
-                next = sub[subI];
-                next.unshift(arr[i]);
-                ret.push( next );
-            }
-        }
-    }
-    return ret;
+    return { idx: winnerIndexes, message: handsChecker.arrOfHands[winnerIndexes[0]].message };
   }
 }

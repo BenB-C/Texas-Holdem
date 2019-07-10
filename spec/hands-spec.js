@@ -1,6 +1,8 @@
 import Hands from '../src/Hands.js';
 import Hand from '../src/Hand.js';
 import Card from '../src/Card.js'
+import Player from '../src/players.js';
+import { Game } from '../src/Game.js';
 
 describe('Test different hands for winner', function(){
   const hands = new Hands();
@@ -77,18 +79,17 @@ describe('Test different hands for winner', function(){
   it('should convert array of cards to array of hands', function(){
     let player1Cards = [];
     for (var i = 0; i < 5; i++) {
-      player1Cards.push(new Card((i+3).toString(), "Diamonds"));
+      player1Cards.push(new Card((i+3).toString(), 'Diamonds'));
     }
     let player2Cards = [];
     for (var i = 0; i < 5; i++) {
-      player2Cards.push(new Card((i+2).toString(), "Spades"));
+      player2Cards.push(new Card((i+2).toString(), 'Spades'));
     }
 
     let hands = new Hands();
     let firstHand = new Hand(player1Cards)
     let secondHand = new Hand(player2Cards)
     hands.findBestHands([new Hand(player1Cards), new Hand(player2Cards)]);
-    console.log(hands.arrOfHands);
     expect(hands.arrOfHands[0].winner).toEqual(true);
   })
 
@@ -106,8 +107,29 @@ describe('Test different hands for winner', function(){
     let firstHand = new Hand(player1Cards)
     let secondHand = new Hand(player2Cards)
     hands.findBestHands([new Hand(player1Cards), new Hand(player2Cards)]);
-    console.log(hands.arrOfHands);
     expect(hands.arrOfHands[0].draw).toEqual(true);
   })
+
+  it('should determine the best hand using community cards', function(){
+    let numberOfPlayers = 2;
+    let players = [];
+    for (let i = 0; i < numberOfPlayers; i++) {
+      players.push(new Player());
+    }
+    // Layout table
+    let game = new Game(players);
+    for (var i = 0; i < 2; i++) {
+      game.players[0].hand.push(new Card((i+2).toString(), "Diamonds"));
+      game.players[1].hand.push(new Card((i+2).toString(), "Diamonds"));
+      game.communityCards.push(new Card((i+2).toString(), "Clubs"));
+    }
+    for (var i = 2; i < 5; i++) {
+      game.communityCards.push(new Card((i+2).toString(), "Diamonds"));
+    }
+
+    let winner = game.getWinner();
+    expect(winner.idx.toString()).toEqual("0,1");
+    expect(winner.message).toEqual("Straight-Flush");
+  });
 
 })
