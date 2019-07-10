@@ -131,9 +131,10 @@ $(document).ready(function(){
 
 //   // Start game
 
-// let addInitialChips = new Player();
-// $('#playChips').append(addInitialChips.chips)
-// $('#comChips').append(addInitialChips.chips)
+let addInitialChips = new Player();
+game.players.forEach( (player, i) => {
+  $('#playChips' + i).text(game.players[i].chips);
+})
 
 
 //   game.dealCards(2, true);
@@ -197,8 +198,8 @@ $(document).ready(function(){
   $('#submitBet').click(function(){
     $("#raiseForm").hide();
 
-    game.handleRaise($('#raiseBet').val());
+    game.handleRaise(parseInt($('#raiseBet').val()));
     console.log($('#raiseBet').val());
   });
-  
+
 });
