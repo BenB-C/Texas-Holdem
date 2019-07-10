@@ -122,4 +122,56 @@ export class Game {
     return this.currentlyBettingIndex === this.players.length-1 && !this.players[0].hasFolded;
   }
 
+  getBestHand(playerIdx) {
+    let setsOfFiveCards = combinations(this.players[playerIdx].hand.concat(this.communityCards), 5);
+    console.log("setsOfFiveCards", setsOfFiveCards);
+    let hands = setsOfFive.map(setOfFiveCards => {
+      return new Hand(setOfFiveCards);
+    });
+    console.log("hands", hands);
+    let handsChecker = new Hands();
+    handsChecker.findBestHands(hands);
+    handsChecker.arrOfHands.forEach(hand => {
+      if (hand.winner) {
+        return hand;
+      }
+    });
+  }
+
+  getWinner() {
+    let winner = {};
+    let playersBestHands = this.players.map(player, i => {
+      return getBestHand(i);
+    });
+    let handsChecker = new Hands();
+    handsChecker.findBestHands(playersBestHands);
+    let winnerIndexes []
+    handsChecker.arrOfHands.forEach(hand, i => {
+      if (hand.winner) {
+        winnerIndexes.push(i);
+      }
+    });
+    // TODO: generate winning message
+  }
+  // based on code from https://rosettacode.org/wiki/Combinations#JavaScript
+  combinations(arr, k){
+    let i,
+    subI,
+    ret = [],
+    sub,
+    next;
+    for(i = 0; i < arr.length; i++){
+        if(k === 1){
+            ret.push( [ arr[i] ] );
+        }else{
+            sub = combinations(arr.slice(i+1, arr.length), k-1);
+            for(subI = 0; subI < sub.length; subI++ ){
+                next = sub[subI];
+                next.unshift(arr[i]);
+                ret.push( next );
+            }
+        }
+    }
+    return ret;
+  }
 }
