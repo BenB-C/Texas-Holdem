@@ -9,18 +9,18 @@
 <body>
   <div class="container">
     <h1 class ="pokerHeader">Play Poker</h1>
-    <div id="Player1" class="jumbotron">
+    <div id="player1">
       <div id="playerCards1">
         <p>Computer cards</p>
-        <!-- <img class="card" src="./Assets/2-Spades.png">
-        <img class="card" src="./Assets/2-Hearts.png"> -->
       </div>
       <div id="playerChips1">
-        <p>Chips: <span id="comChips">0</span></p>
-        <p>Bet: <span id="comBet">0</span></p>
+        <p><img class="dealerChip" src="./assets/poker-chips.png" alt="dealerChip"><span id="comChips"></span></p>      <p>Bet: <span id="comBet">0</span></p>
+        <div id="dealer1">
+          <img class="dealerChip" src="./assets/dealer-chip.png" alt="dealerChip0">
+        </div>
       </div>
     </div>
-    <div id="table" class="jumbotron">
+    <div id="table">
       <div id="tablePot">
         <img class="pot" src="./assets/pot.svg" alt="Pot Value">
         <p>Pot</p>
@@ -29,33 +29,36 @@
         <p>Community cards</p>
       </div>
     </div>
-    <div id="Player0" class="jumbotron">
+    <div id="player0">
+      <div id="dealer0">
+        <img class="dealerChip" src="./assets/dealer-chip.png" alt="dealerChip0">
+      </div>
       <div id="playerCards0">
         <p>Player cards</p>
-        <!-- <img class="card" src="./Assets/Queen-Diamonds.png">
-        <img class="card" src="./Assets/King-Hearts.png"> -->
       </div>
       <div id="playerChips0">
-        <p>Chips: <span id="playChips">0</span></p>
+        <p><img class="dealerChip" src="./assets/poker-chips.png" alt="dealerChip"><span id="playChips"></span></p>
         <p>Bet: <span id="playBet">0</span></p>
       </div>
     </div>
+    <form id="raiseForm">
+      <input id="raiseBet" type="number" class="form-control" placeholder="Place your bet!"><br>
+      <button id="submitBet" type="button" name="button" class="btn-btn-danger">Submit</button>
+    </form>
+    <div class="player-chips">
+      <p>player chips</p>
+    </div>
+    <div class="show-winner">
 
+    </div>
+    <button id="start" class="start-game" type="button">Start Game</button>
 
-  <div class="player-chips">
-    <p>player chips</p>
+    <div class="display-bet-buttons">
+      <button id="fold" class="bet-button" type="button">Fold</button>
+      <button id="raise" class="bet-button" type="button">Raise</button>
+      <button id="call" class="bet-button" type="button">Call</button>
+      <button id="check" class="bet-button" type="button">Check</button>
+    </div>
   </div>
-  <div class="show-winner">
-
-  </div>
-  <button id="start" class="start-game" type="button">Start Game</button>
-
-  <div class="display-bet-buttons">
-    <button id="fold" class="bet-button" type="button">Fold</button>
-    <button id="raise" class="bet-button" type="button">Raise</button>
-    <button id="call" class="bet-button" type="button">Call</button>
-    <button id="check" class="bet-button" type="button">Check</button>
-  </div>
-</div>
 </body>
 </html>

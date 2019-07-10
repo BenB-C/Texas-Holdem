@@ -1,5 +1,4 @@
-
-body {
+  body {
   background-color: forestgreen;
   font-family: 'Signika Negative', sans-serif;
   font-size: 20px;
@@ -14,7 +13,7 @@ body {
   padding: 10px 10px;
 }
 
-#Player1 {
+#player1 {
   text-align: center;
   padding-top: 150px;
 }
@@ -24,7 +23,7 @@ body {
   padding-top: 100px;
 }
 
-#Player0 {
+#player0 {
   text-align: center;
   padding-top: 50px;
 }
@@ -36,23 +35,56 @@ body {
 
 #fold {
   font-size: 40px;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 #call {
   font-size: 40px;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 #check {
   font-size: 40px;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 #raise {
   font-size: 40px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+#raiseForm {
+  display: none;
+  margin-top: 20px;
+
+}
+
+#raiseForm {
+  text-align: center;
+}
+
+#submitBet, #raiseBet {
+  height: 40px;
+}
+
+.player-chips {
+  text-align: center;
 }
 
 
+.dealerChip
+{
+  width: 50px;
+  height: 50px;
+  /* margin-left: 100px; */
+}
+
 .card {
-width: 100px;
+  width: 100px;
 }
 
 .pot {
@@ -61,13 +93,16 @@ width: 100px;
 }
 
 
-
-/* .game {
-display: grid;
-grid-template-columns: 20% 20% 20% 20% 20%;
-grid-template-rows: 20% 20% 20% 20% 20%;
-} */
-
 .display-bet-buttons {
   display: none;
 }
+
+
+
+
+/* .game {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 20% 20% 20% 20% 20%;
+  } */
+
