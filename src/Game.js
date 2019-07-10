@@ -8,14 +8,30 @@ export class Game {
     this.players = players;
     this.pot = 0;
     this.currentBet = 0;
+    this.roundCount = 0;
     this.betsNeeded = players.length;
     this.communityCards = [];
     this.dealerIndex = this.players.length - 1;
     // this.currentlyBettingIndex = (this.dealerIndex + 1) % this.players.length;
-    this.currentlyBettingIndex = 0;
+    this.currentlyBettingIndex = 1;
+    this.computerBetChoices = [[400, "Straight-Flush"],[300, "Flush"],[250, "Straight"],
+                  [200,"Full House"],[160, "4 of a Kind"] ,[120, "3 of a Kind"],
+                  [80, "Two Pair"], [50, "Pair"], [20, "High Card"]];
+
+    this.roundCardNum = [2, 3, 1, 1];
+
   }
 
-  dealCards(numberOfCards, isFirstDeal) {
+  resetHand(){
+    this.pot = 0;
+    this.roundCount = 0;
+    this.dealerIndex = (this.dealerIndex + 1) % this.players.length;
+    this.communityCards = [];
+  }
+
+  dealCards(roundCount) {
+    let numberOfCards = this.roundCardNum[roundCount]
+    let isFirstDeal = roundCount > 0;
     let cards = this.deck.cards;
     let communityCards = this.communityCards;
     for (let i = 0; i < numberOfCards; i++) {
@@ -27,11 +43,12 @@ export class Game {
         }, this);
       } else {
         this.communityCards.push(this.deck.nextCard());
-        console.log("player " + i + " was dealt " + player.hand.toString());
       }
     }
     console.log("CommunityCards", communityCards.toString());
     this.players.forEach(player => console.log(player.hand.toString()));
+
+    this.roundCount += 1;
   }
 
   nextCard() {
@@ -39,15 +56,61 @@ export class Game {
     return this.cards.splice(randomIndex, 1)[0];
   }
 
-  takeBets() {
-    console.log("takeBets");
+
+  computerBet(){
+    const turn = this.players[this.currentlyBettingIndex];
+    // const bestHand = this.getBestHand().message;
+    if(turn.amountToBet === 0)
+      turn.amountToBet = this.chooseBet();
+
+
+
+    let randPercToDecideFold = Math.floor(Math.random() * 6); //between 20%-99%
+    let randPercToDecideCallCheck = Math.floor(Math.random() * 2); //between 20%-99%
+    if(randPercToDecideFold === 0){
+      //fold
+      console.log("computer choice = Folded");
+      this.handleFold();
+      return;
+    } else if(randPercToDecideCallCheck === 2 || turn.amountToBet === 0){
+      //call or check
+      if(turn.bet - this.currentBet === 0){
+        console.log("computer choice = checked");
+        this.handleCheck();
+      } else {
+        console.log("computer choice = called");
+        this.handleCall();
+      }
+    } else {
+      //raise
+      let randPerc = Math.floor(Math.random() * 80) + 19; //between 20%-99%
+      let randomBet = Math.floor(turn.amountToBet * (randPerc/100));
+      console.log("computer choice = raise: ", randomBet);
+      turn.amountToBet -= randomBet;
+      this.handleRaise(randomBet);
+    }
+
+    console.log("computer turn.bet", turn.bet);
+
   }
 
+  chooseBet(){
+    // this.computerBetChoices.forEach(function(hand){
+    //   if(hand[1] === bestHand){
+    //     totalBet = hand[0]
+    //   }
+    // })
 
+    //let randPerc = Math.floor(Math.random() * 80) + 19; //between 20%-99%
+    //let randBet = randPerc * totalBet;
+    let totalBet = Math.floor(Math.random() * 80) + 19; //between 20%-99%
+    console.log('totalBet', totalBet);
+    return totalBet;
+  }
 
   incTurn(){
+    //TODO: check if everyone has folded, or if roundCount = 4, and if so end hand
     this.currentlyBettingIndex = (this.currentlyBettingIndex + 1) % this.players.length;
-    console.log('idx', this.currentlyBettingIndex);
     if(this.betsNeeded > 0){
       if (!this.players[this.currentlyBettingIndex].hasFolded){
         this.betsNeeded--
@@ -57,8 +120,9 @@ export class Game {
         }else {
           return "userTurn";
         }
+      } else{
+          this.incTurn();
       }
-      this.incTurn();
     } else{
       return "reset";
     }
@@ -66,6 +130,7 @@ export class Game {
 
   resetBetting(){
     this.currentBet = 0;
+    this.betsNeeded = this.players.length;
     this.players.forEach(function(player){
       player.hasFolded = false;
     })
@@ -86,7 +151,6 @@ export class Game {
   // }
 
   handleFold(){
-    console.log("player has folded");
     this.players[this.currentlyBettingIndex].hasFolded = true;
   }
 
@@ -101,7 +165,7 @@ export class Game {
 
   handleRaise(amount){
     //place bet equal to bet + raise amount
-    amount = 100;
+    if(!amount) amount = 100;
     let stillIn = 0;
     // this.players.forEach(function())
     this.betsNeeded = this.players.length;
@@ -117,9 +181,8 @@ export class Game {
     //might not need
   }
 
-  isNextPlayerUser(){
-    console.log('here');
-    return this.currentlyBettingIndex === this.players.length-1 && !this.players[0].hasFolded;
-  }
+  // isNextPlayerUser(){
+  //   return this.currentlyBettingIndex === this.players.length-1 && !this.players[0].hasFolded;
+  // }
 
 }

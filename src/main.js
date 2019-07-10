@@ -38,35 +38,13 @@ let game = new Game(players);
 
 
 
-// game.takeBets();
-// // flop
-// game.dealCards(3);
-// game.takeBets();
-// // river
-// game.dealCards(1);
-// game.takeBets();
-// // turn
-// game.dealCards(1);
-// game.takeBets();
 function displayButtons(){
-  console.log('displayButtons');
-  // if(game.isNextPlayerUser() || game.currentBet === 0){
-    //$(".display-bet-buttons").show();
-    $("#fold").show();
-    $("#raise").show();
-    $("#call").hide();
-    $("#check").hide();
-    (game.currentBet === 0) ? $("#check").show() : $("#call").show();
-
-    //todo: add condition for blind
-  //   console.log(game.currentBet);
-  //
-  // }else {
-  //   $("#fold").hide();
-  //   $("#raise").hide();
-  //   $("#call").hide()
-  //   $("#check").hide()
-  // }
+  $(".display-bet-buttons").show();
+  $("#fold").show();
+  $("#raise").show();
+  $("#call").hide();
+  $("#check").hide();
+  (game.currentBet === 0) ? $("#check").show() : $("#call").show();
 }
 
 function hideButtons(){
@@ -77,20 +55,63 @@ function hideButtons(){
 }
 
 function handleResult(result){
-  console.log('result', result);
   if(result === "computerTurn"){
     setTimeout(function(){
       //call ai function
       console.log('computer turn')
+      game.computerBet();
       let result = game.incTurn();
       handleResult(result)
     }, 1500)
   } else if(result === "userTurn"){
+      console.log('user turn')
     displayButtons();
+  } else if(result === "roundDone"){
+    playNewRound();
   } else {
-    game.resetBetting();
+    playNewHand();
   }
 }
+
+function playNewHand(){
+  game.resetHand();
+  playNewRound();
+
+}
+
+function playNewRound(){
+  game.resetBetting();
+
+  game.deck = new Deck();
+  game.dealCards(game.roundCount)
+
+  $(".show-winner").empty();
+  let result = game.incTurn();
+  handleResult(result);
+  // flop
+  // game.dealCards(3);
+  // game.incTurn();
+  // // river
+  // game.dealCards(1);
+  // game.incTurn();
+  // // turn
+  // game.dealCards(1);
+  // game.incTurn();
+  // //
+  // let result = game.getWinner();
+  // console.log(result);
+  // let toDisplay = "<p>";
+  // if(result.idx.length > 1){ //multiple winners
+  //   result.idx.forEach(function(idx){
+  //     toDisplay += `Player ${result.idx+1} has tied for the win with a ${result.message}<br>`;
+  //   })
+  // } else {
+  //   toDisplay = `Player ${result.idx+1} has won the round with a ${result.message}<br>`;
+  // }
+  // $(".show-winner").html(toDisplay + "</p>");
+
+}
+
 
 $(document).ready(function(){
   // test displayCards
@@ -98,7 +119,6 @@ $(document).ready(function(){
   let card1 = new Card("Ace", "Diamonds");
   let card2 = new Card("Queen", "Spades");
   displayCards(playerIndex, card1, card2);
-  console.log("line 79");
   // test displayChips
   let amountOfChips = 2000;
   displayChips(playerIndex, amountOfChips);
@@ -108,17 +128,14 @@ $(document).ready(function(){
   // display player cards
 
   // user is first
-  displayButtons();
+  $(".start-game").click(function(){
+    $(this).hide();
+    playNewHand();
 
-
-  // game.currentlyBettingIndex = (game.dealerIndex + 1) % game.players.length;
-
-  // game.incTurn(game.currentlyBettingIndex);
-
+  })
 
   $(".bet-button").click(function(event){
     let choice = $(this)[0].id;
-    console.log(choice);
     //do work
     if(choice === "fold"){
       hideButtons();
@@ -136,7 +153,3 @@ $(document).ready(function(){
 
   })
 })
-
-
-
-// test.addBet();
