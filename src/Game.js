@@ -26,7 +26,7 @@ export class Game {
         }, this);
       } else {
         this.communityCards.push(this.deck.nextCard());
-        console.log("player " + i + " was dealt " + player.hand.toString());
+        // console.log("player " + i + " was dealt " + player.hand.toString());
       }
     }
     console.log("CommunityCards", communityCards.toString());
