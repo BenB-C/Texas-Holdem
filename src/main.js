@@ -13,9 +13,10 @@ import './imageImports.js';
 // let displayCards = function (playerID, card1, card2) {
 function displayCards(playerID, card1, card2) {
 
-  const card = new Image();
+  let card = new Image();
   card.src = `card${card1.value}Of${card1.suit}`;
   $('#playerCards' + playerID).append(`<img class="card" src='./Assets/${card1.value}-${card1.suit}.png'>`);
+  card = new Image();
   card.src = `card${card2.value}Of${card2.suit}`;
   $('#playerCards' + playerID).append(`<img class="card" src='./Assets/${card2.value}-${card2.suit}.png'>`);
 }
@@ -23,16 +24,6 @@ function displayCards(playerID, card1, card2) {
 function displayChips(playerID, amount) {
 
 }
-
-// Import images
-function importAll(r) {
-  let images = {};
-  r.keys().forEach((item, index) => {
-    images[item.replace('./', '')] = r(item);
-  });
-}
-const images = importAll(require.context('./Assets', false, /\.(png|jpe?g|svg)$/));
-
 
 // Create players
 let numberOfPlayers = 2;
@@ -58,25 +49,47 @@ let game = new Game(players);
 // game.dealCards(1);
 // game.takeBets();
 function displayButtons(){
-  console.log('here');
-  if(game.isNextPlayerUser() || game.currentBet === 0){
+  console.log('displayButtons');
+  // if(game.isNextPlayerUser() || game.currentBet === 0){
     //$(".display-bet-buttons").show();
     $("#fold").show();
     $("#raise").show();
-    $("#call").hide()
-    $("#check").hide()
-
-    //todo: add condition for blind
-    console.log(game.currentBet);
+    $("#call").hide();
+    $("#check").hide();
     (game.currentBet === 0) ? $("#check").show() : $("#call").show();
 
-  }else {
-    $("#fold").hide();
-    $("#raise").hide();
-    $("#call").hide()
-    $("#check").hide()
-  }
+    //todo: add condition for blind
+  //   console.log(game.currentBet);
+  //
+  // }else {
+  //   $("#fold").hide();
+  //   $("#raise").hide();
+  //   $("#call").hide()
+  //   $("#check").hide()
+  // }
+}
 
+function hideButtons(){
+  $("#fold").hide();
+    $("#raise").hide();
+    $("#call").hide();
+    $("#check").hide();
+}
+
+function handleResult(result){
+  console.log('result', result);
+  if(result === "computerTurn"){
+    setTimeout(function(){
+      //call ai function
+      console.log('computer turn')
+      let result = game.incTurn();
+      handleResult(result)
+    }, 1500)
+  } else if(result === "userTurn"){
+    displayButtons();
+  } else {
+    game.resetBetting();
+  }
 }
 
 $(document).ready(function(){
@@ -85,19 +98,22 @@ $(document).ready(function(){
   let card1 = new Card("Ace", "Diamonds");
   let card2 = new Card("Queen", "Spades");
   displayCards(playerIndex, card1, card2);
+  console.log("line 79");
   // test displayChips
   let amountOfChips = 2000;
   displayChips(playerIndex, amountOfChips);
-  
+
   // Start game
   game.dealCards(2, true);
   // display player cards
+
+  // user is first
   displayButtons();
 
 
   // game.currentlyBettingIndex = (game.dealerIndex + 1) % game.players.length;
 
-  game.takeBet(game.currentlyBettingIndex);
+  // game.incTurn(game.currentlyBettingIndex);
 
 
   $(".bet-button").click(function(event){
@@ -105,8 +121,7 @@ $(document).ready(function(){
     console.log(choice);
     //do work
     if(choice === "fold"){
-      $(".display-bet-buttons").hide();
-
+      hideButtons();
       game.handleFold();
     } else if (choice === "call"){
       game.handleCall();
@@ -115,11 +130,10 @@ $(document).ready(function(){
     } else if(choice === "check"){
       game.handleCheck();
     }
+    hideButtons();
+    let result = game.incTurn();
+    handleResult(result);
 
-    displayButtons();
-    game.incTurn(displayButtons);
-    displayButtons();
-  
   })
 })
 
