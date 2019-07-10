@@ -1,5 +1,6 @@
 import Hands from '../src/Hands.js';
 import Hand from '../src/Hand.js';
+import Card from '../src/Card.js'
 
 describe('Test different hands for winner', function(){
   const hands = new Hands();
@@ -71,6 +72,42 @@ describe('Test different hands for winner', function(){
     hands.findBestHands([firstHand, secondHand])
     expect(firstHand.draw).toEqual(true);
     expect(secondHand.draw).toEqual(true);
+  })
+
+  it('should convert array of cards to array of hands', function(){
+    let player1Cards = [];
+    for (var i = 0; i < 5; i++) {
+      player1Cards.push(new Card((i+3).toString(), "Diamonds"));
+    }
+    let player2Cards = [];
+    for (var i = 0; i < 5; i++) {
+      player2Cards.push(new Card((i+2).toString(), "Spades"));
+    }
+
+    let hands = new Hands();
+    let firstHand = new Hand(player1Cards)
+    let secondHand = new Hand(player2Cards)
+    hands.findBestHands([new Hand(player1Cards), new Hand(player2Cards)]);
+    console.log(hands.arrOfHands);
+    expect(hands.arrOfHands[0].winner).toEqual(true);
+  })
+
+  it('should convert array of cards to array of hands and determine a tie with flushes', function(){
+    let player1Cards = [];
+    for (var i = 0; i < 5; i++) {
+      player1Cards.push(new Card((i+2).toString(), "Diamonds"));
+    }
+    let player2Cards = [];
+    for (var i = 0; i < 5; i++) {
+      player2Cards.push(new Card((i+2).toString(), "Spades"));
+    }
+
+    let hands = new Hands();
+    let firstHand = new Hand(player1Cards)
+    let secondHand = new Hand(player2Cards)
+    hands.findBestHands([new Hand(player1Cards), new Hand(player2Cards)]);
+    console.log(hands.arrOfHands);
+    expect(hands.arrOfHands[0].draw).toEqual(true);
   })
 
 })
