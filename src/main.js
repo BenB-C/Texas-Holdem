@@ -20,6 +20,12 @@ function displayCards(playerID, card1, card2) {
   $('#playerCards' + playerID).append(`<img class="card" src='./Assets/${card2.value}-${card2.suit}.png'>`);
 }
 
+function addCommunityCard(card) {
+  const card = new Image();
+  card.src = `card${card.value}Of${card.suit}`;
+  $('#table').append(`<img class="card" src='./Assets/${card.value}-${card.suit}.png'>`);
+}
+
 function displayChips(playerID, amount) {
 
 }
@@ -80,18 +86,38 @@ function displayButtons(){
 }
 
 $(document).ready(function(){
-  // test displayCards
-  let playerIndex = 0;
-  let card1 = new Card("Ace", "Diamonds");
-  let card2 = new Card("Queen", "Spades");
-  displayCards(playerIndex, card1, card2);
+  // // test displayCards
+  // let playerIndex = 0;
+  // let card1 = new Card("5", "Diamonds");
+  // let card2 = new Card("6", "Spades");
+  // let card3 = new Card("Ace", "Spades");
+  // let card4 = new Card ("3", "Hearts");
+  // let card5 = new Card ("7", "Hearts");
+  // displayCards(playerIndex, card1, card2);
+  // addCommunityCard(card3);
+  // addCommunityCard(card4);
+  // addCommunityCard(card5);
   // test displayChips
-  let amountOfChips = 2000;
-  displayChips(playerIndex, amountOfChips);
-  
+  // let amountOfChips = 2000;
+  // displayChips(playerIndex, amountOfChips);
+
   // Start game
   game.dealCards(2, true);
-  // display player cards
+
+  // display player0 cards
+  let player0 = game.players[0];
+  displayCards(0, player0.hand[0], player0.hand[1]);
+  console.log(player0.hand[0]);
+  console.log(player0.hand[1]);
+
+  // display player1 cards
+  // let player1 = game.players[1];
+
+  // deal 3 more cards
+
+  // display cards dealt
+
+
   displayButtons();
 
 
@@ -119,7 +145,7 @@ $(document).ready(function(){
     displayButtons();
     game.incTurn(displayButtons);
     displayButtons();
-  
+
   })
 })
 
