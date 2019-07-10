@@ -1,32 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Poker</title>
-  </head>
-  <body>
-    <h1>Play Poker</h1>
-    <div class="computer-cards">
-      <p>computer cards</p>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Russo+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Signika+Negative&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Poker</title>
+</head>
+<body>
+  <div class="container">
+    <h1 class ="pokerHeader">Play Poker</h1>
+    <div id="buttonDiv">
+      <button id="fold" type="button">Fold</button>
+      <button id="call" type="button">Call</button>
+      <button id="check" type="button">Check</button>
+      <button id="raise" type="button" class="">Raise</button>
     </div>
-    <div class="computer-chips">
-      <p>computer chips</p>
+    <div id="Player1" class="jumbotron">
+      <div id="playerCards1">
+        <p>Computer cards</p>
+        <!-- <img class="card" src="./Assets/2-Spades.png">
+        <img class="card" src="./Assets/2-Hearts.png"> -->
+      </div>
+      <div id="playerChips1">
+        <p>Chips: <span id="comChips">0</span></p>
+        <p>Bet: <span id="comBet">0</span></p>
+      </div>
     </div>
-    <div class="pot">
-      <p>pot</p>
+    <div id="table" class="jumbotron">
+      <div id="tablePot">
+        <img class="pot" src="./assets/pot.svg" alt="Pot Value">
+        <p>Pot</p>
+      </div>
+      <div id="communityCards">
+        <p>Community cards</p>
+      </div>
     </div>
-    <div class="player-cards">
-      <p>player cards</p>
+    <div id="Player0" class="jumbotron">
+      <div id="playerCards0">
+        <p>Player cards</p>
+        <!-- <img class="card" src="./Assets/Queen-Diamonds.png">
+        <img class="card" src="./Assets/King-Hearts.png"> -->
+      </div>
+      <div id="playerChips0">
+        <p>Chips: <span id="playChips">0</span></p>
+        <p>Bet: <span id="playBet">0</span></p>
+      </div>
     </div>
-    <div class="player-chips">
-      <p>player chips</p>
-    </div>
+  </div>
 
-    <div class="display-bet-buttons">
-      <button id="fold" class="bet-button" type="button">Fold</button>
-      <button id="raise" class="bet-button" type="button">Raise</button>
-      <button id="call" class="bet-button" type="button">Call</button>
-      <button id="check" class="bet-button" type="button">Check</button>
-    </div>
-  </body>
+
+  <div class="player-chips">
+    <p>player chips</p>
+  </div>
+
+  <div class="display-bet-buttons">
+    <button id="fold" class="bet-button" type="button">Fold</button>
+    <button id="raise" class="bet-button" type="button">Raise</button>
+    <button id="call" class="bet-button" type="button">Call</button>
+    <button id="check" class="bet-button" type="button">Check</button>
+  </div>
+</body>
 </html>

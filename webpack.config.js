@@ -41,7 +41,25 @@ module.exports = {
         options: {
           presets: ['es2015']
         }
-      }
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg|bmp)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'Assets/'
+            }
+          }
+        ]
+      },
+      {
+        test:/\.html$/,
+        use: [
+          'html-loader'
+        ]
+      },
     ]
   }
 };

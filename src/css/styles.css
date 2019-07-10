@@ -1,3 +1,74 @@
+
+body {
+  background-color: forestgreen;
+  font-family: 'Signika Negative', sans-serif;
+  font-size: 20px;
+}
+
+.pokerHeader {
+  text-align: center;
+  font-family: 'Russo One', sans-serif;
+  font-size: 40px;
+  background-color: beige;
+  border-radius: 50px;
+  padding: 10px 10px;
+}
+
+#Player1 {
+  text-align: center;
+  padding-top: 150px;
+}
+
+#table {
+  text-align: center;
+  padding-top: 100px;
+}
+
+#Player0 {
+  text-align: center;
+  padding-top: 50px;
+}
+
+#buttonDiv {
+  text-align: center;
+  margin-top: 40px;
+}
+
+#fold {
+  font-size: 40px;
+}
+
+#call {
+  font-size: 40px;
+}
+
+#check {
+  font-size: 40px;
+}
+
+#raise {
+  font-size: 40px;
+}
+
+
+.card {
+width: 100px;
+}
+
+.pot {
+  width: 70px;
+  height: 70px;
+}
+
+
+
+/* .game {
+display: grid;
+grid-template-columns: 20% 20% 20% 20% 20%;
+grid-template-rows: 20% 20% 20% 20% 20%;
+} */
+
 .display-bet-buttons {
   display: none;
 }
+

@@ -1,0 +1,7 @@
+import card2ofClubs from './Assets/2-Clubs.png';
+$value=2
+for f in $(ls /Users/Guest/desktop/poker/src/Assets);
+do
+  $
+  echo import $f >> importCode.txt;
+done
