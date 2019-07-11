@@ -83,7 +83,8 @@ function handleResult(result){
       console.log('user turn')
     displayButtons();
   } else if(result === "roundDone"){
-    playNewHand();
+    handleWinner();
+    // playNewHand(); TODO?
   } else {
     playNewRound();
   }
@@ -95,12 +96,44 @@ function playNewHand(){
 
 }
 
+function handleWinner() {
+  let result = game.getWinner();
+  console.log(result);
+  let toDisplay = "<p>";
+  if(result.idx.length > 1){ //multiple winners
+    result.idx.forEach(function(idx){
+      toDisplay += `Player ${result.idx+1} has tied for the win with a ${result.message}<br>`;
+    })
+  } else {
+    toDisplay = `Player ${result.idx+1} has won the round with a ${result.message}<br>`;
+  }
+  $(".show-winner").html(toDisplay + "</p>");
+}
+
 function playNewRound(){
   game.resetBetting();
 
   game.deck = new Deck();
   game.dealCards(game.roundCount)
+  if (game.roundCount === 1) {
+      // display player0 cards
+      let player0 = game.players[0];
+      displayCards(0, player0.hand[0], player0.hand[1]);
+      console.log(player0.hand[0]);
 
+      // display player1 cards
+      let player1 = game.players[1];
+      displayFaceDownCards(1, player1.hand[0], player1.hand[1]);
+      console.log(player1.hand[0]);
+  } else if (game.roundCount === 2) {
+      addCommunityCard(game.communityCards[0]);
+      addCommunityCard(game.communityCards[1]);
+      addCommunityCard(game.communityCards[2]);
+  } else if (game.roundCount === 3){
+    addCommunityCard(game.communityCards[3]);
+  } else {
+    addCommunityCard(game.communityCards[4]);
+  }
   $(".show-winner").empty();
   let result = game.incTurn();
   handleResult(result);
@@ -114,17 +147,7 @@ function playNewRound(){
   // game.dealCards(1);
   // game.incTurn();
   // //
-  // let result = game.getWinner();
-  // console.log(result);
-  // let toDisplay = "<p>";
-  // if(result.idx.length > 1){ //multiple winners
-  //   result.idx.forEach(function(idx){
-  //     toDisplay += `Player ${result.idx+1} has tied for the win with a ${result.message}<br>`;
-  //   })
-  // } else {
-  //   toDisplay = `Player ${result.idx+1} has won the round with a ${result.message}<br>`;
-  // }
-  // $(".show-winner").html(toDisplay + "</p>");
+
 
 }
 
@@ -151,23 +174,12 @@ $(document).ready(function(){
 
 //   game.dealCards(2, true);
 
-//   // display player0 cards
-//   let player0 = game.players[0];
-//   displayCards(0, player0.hand[0], player0.hand[1]);
-//   console.log(player0.hand[0]);
-
-//   // display player1 cards
-//   let player1 = game.players[1];
-//   displayFaceDownCards(1, player1.hand[0], player1.hand[1]);
-//   console.log(player1.hand[0]);
 
 //   // deal 3 more cards
 
 //   game.dealCards(3);
 
-//   addCommunityCard(game.communityCards[0]);
-//   addCommunityCard(game.communityCards[1]);
-//   addCommunityCard(game.communityCards[2]);
+//
 
 
 
