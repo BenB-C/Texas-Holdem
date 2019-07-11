@@ -22,6 +22,8 @@ export class Game {
 
     this.roundCardNum = [2, 3, 1, 1];
 
+    this.roundNames = ["", "Pre-Flop", "Flop", "Turn", "River"]
+
   }
 
   resetHand(){

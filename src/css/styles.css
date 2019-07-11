@@ -25,6 +25,13 @@
   padding: 10px 10px;
 }
 
+.round-count {
+  display: none;
+  position: fixed;
+  bottom: 50%;
+  right: 70%;
+}
+
 #player1 {
   text-align: center;
   padding-top: 150px;
