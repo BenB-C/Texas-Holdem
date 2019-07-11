@@ -1,28 +1,29 @@
-  body {
+body {
   background-color:DarkSlateGray  ;
   font-family: 'Signika Negative', sans-serif;
   font-size: 20px;
-  color: black;
+  color: white;
   /* background-image: url('../Assets/poker-table.png');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center; */
 }
 
-/* .container {
-  background-image: url('../Assets/poker-table.png');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
+
+/* .pokerHeader {
+text-align: center;
+font-family: 'Russo One', sans-serif;
+font-size: 40px;
+background-color: beige;
+border-radius: 50px;
+padding: 10px 10px;
 } */
 
-.pokerHeader {
-  text-align: center;
-  font-family: 'Russo One', sans-serif;
-  font-size: 40px;
-  background-color: beige;
-  border-radius: 50px;
-  padding: 10px 10px;
+.round-count {
+  display: none;
+  position: fixed;
+  bottom: 50%;
+  right: 70%;
 }
 
 #player1 {
@@ -83,10 +84,26 @@
   height: 40px;
 }
 
+#loader {
+  position: fixed;
+  display: block;
+  bottom: 1px;
+
+
+
+  background-size: 1700px auto;
+  background-repeat: no-repeat;
+  background-attachment: fixed; */
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+
+}
+
 .container {
-      position: relative;
-      display: block;
-      background-size: 1700px auto;
+  position: relative;
+  display: block;
+  background-size: 1700px auto;
 
 
   background-image: url('../Assets/poker-table.png');
@@ -94,7 +111,7 @@
   background-attachment: fixed;
   background-position: center center;
   width: 100%;
-      height: 100%;
+  height: 100%;
 }
 
 .player-chips {
@@ -109,6 +126,10 @@
   /* margin-left: 100px; */
 }
 
+#dealer0 {
+  display: none;
+}
+
 .card {
   width: 100px;
 }
@@ -121,26 +142,29 @@
 
 .display-bet-buttons {
   display: none;
+  position: fixed;
+  /* bottom: 5%; */
+  right: 43%;
 }
 @keyframes neonspark  {
-0% { text-shadow: none; }
-30% { text-shadow: 0 0 30px rgba(255,0,84,0.6); }
-60% {
-  text-shadow: 0 0 30px rgba(255,0,84,0.6),
-      0 0 60px rgba(255,0,84,0.4);
-  }
-80% { text-shadow: none; }
-100% {
+  0% { text-shadow: none; }
+  30% { text-shadow: 0 0 30px rgba(255,0,84,0.6); }
+  60% {
     text-shadow: 0 0 30px rgba(255,0,84,0.6),
-      0 0 60px rgba(255,0,84,0.4),
-      0 0 100px rgba(255,0,84,0.2),
-      0 0 90px rgba(255,0,84,0.1);
+    0 0 60px rgba(255,0,84,0.4);
+  }
+  80% { text-shadow: none; }
+  100% {
+    text-shadow: 0 0 30px rgba(255,0,84,0.6),
+    0 0 60px rgba(255,0,84,0.4),
+    0 0 100px rgba(255,0,84,0.2),
+    0 0 90px rgba(255,0,84,0.1);
   }
 }
 
 @font-face{
   font-family:'Neon80sRegular';
-src: url('//thenewcode.com/assets/fonts/neon-webfont.woff') format('woff'),
+  src: url('//thenewcode.com/assets/fonts/neon-webfont.woff') format('woff'),
   url('/assets/fonts/neon-webfont.ttf') format('truetype');
   font-weight:normal;
   font-style:normal;
@@ -165,21 +189,24 @@ h1#neon-tubing {
   font-weight: 100;
   text-align: center;
   font-family: Neon80sRegular, sans-serif;
-  color: #fee;
+  color: #ff5757;
 
   text-transform: uppercase;
   font-size: 6rem;
   letter-spacing: 2rem;
-  animation: neonspark 1s 3s forwards;
+  animation: neonspark 3  s 3s forwards;
   text-shadow:
-    0 0 20px rgba(255,0,84,0.6),
-    0 0 40px rgba(255,0,84,0.4),
-    0 0 60px rgba(255,0,84,0.2),
-    0 0 80px rgba(255,0,84,0.1);
+  0 0 20px rgba(255,0,84),
+  0 0 40px rgba(255,0,84, 1),
+  0 0 60px rgba(255,0,84,0.2),
+  0 0 80px rgba(255,0,84,0.1);
 }
-h1#neon-tubing span { animation: neonspark 4s 3s infinite;  }
+h1#neon-tubing span { animation: neonspark 2s 1s infinite;  }
 
-
+#playChips1, #playChips0, #potChips {
+  margin-right: 10px;
+  margin-left: 10px;
+}
 
 
 
