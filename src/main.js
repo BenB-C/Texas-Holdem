@@ -129,6 +129,10 @@ function playNewRound(){
 
   game.deck = new Deck();
   game.dealCards(game.roundCount)
+
+  $("#round-count-type").text(game.roundNames[game.roundCount]);
+
+
   if (game.roundCount === 1) {
       // display player0 cards
       let player0 = game.players[0];
@@ -205,6 +209,7 @@ $(document).ready(function(){
   // user is first
   $(".start-game").click(function(){
     $(this).hide();
+  $(".round-count").show();
     updateChipsDisplay();
     playNewHand();
 
