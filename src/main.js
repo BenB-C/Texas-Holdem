@@ -33,6 +33,15 @@ function displayChips(playerID, amount) {
 
 }
 
+function updateChipsDisplay() {
+  game.players.forEach( (player, i) => {
+    $('#playChips' + i).text(game.players[i].chips);
+    $('#playBet' + i).text(game.players[i].bet);
+  });
+  $('#potChips').text(game.pot);
+  console.log("chips display updated");
+}
+
 // Create players
 let numberOfPlayers = 2;
 let players = [];
@@ -61,6 +70,7 @@ function hideButtons(){
 }
 
 function handleResult(result){
+  updateChipsDisplay();
   if(result === "computerTurn"){
     setTimeout(function(){
       //call ai function
@@ -73,9 +83,9 @@ function handleResult(result){
       console.log('user turn')
     displayButtons();
   } else if(result === "roundDone"){
-    playNewRound();
-  } else {
     playNewHand();
+  } else {
+    playNewRound();
   }
 }
 
@@ -118,6 +128,12 @@ function playNewRound(){
 
 }
 
+function nextTurn(){
+  hideButtons();
+  let result = game.incTurn();
+  handleResult(result);
+}
+
 
 $(document).ready(function(){
 //   // test displayCards
@@ -131,10 +147,6 @@ $(document).ready(function(){
 
 //   // Start game
 
-let addInitialChips = new Player();
-game.players.forEach( (player, i) => {
-  $('#playChips' + i).text(game.players[i].chips);
-})
 
 
 //   game.dealCards(2, true);
@@ -167,6 +179,7 @@ game.players.forEach( (player, i) => {
   // user is first
   $(".start-game").click(function(){
     $(this).hide();
+    updateChipsDisplay();
     playNewHand();
 
   })
@@ -178,8 +191,10 @@ game.players.forEach( (player, i) => {
     if(choice === "fold"){
       hideButtons();
       game.handleFold();
+      nextTurn();
     } else if (choice === "call"){
       game.handleCall();
+      nextTurn();
     } else if(choice === "raise"){
       // get amount from user input
 
@@ -187,18 +202,19 @@ game.players.forEach( (player, i) => {
       // game.handleRaise();
     } else if(choice === "check"){
       game.handleCheck();
+      nextTurn();
     }
-    hideButtons();
-    let result = game.incTurn();
-    handleResult(result);
+
   });
 
   // Remove raise from player chips, add to player bet
 
-  $('#submitBet').click(function(){
+  $('#submitBet').click(function(event){
+    event.preventDefault();
     $("#raiseForm").hide();
 
     game.handleRaise(parseInt($('#raiseBet').val()));
+    nextTurn();
     console.log($('#raiseBet').val());
   });
 
