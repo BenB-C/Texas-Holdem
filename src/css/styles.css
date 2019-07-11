@@ -90,6 +90,7 @@ padding: 10px 10px;
 
 #submitBet, #raiseBet {
   height: 40px;
+  font-size: 20px;
 }
 
 #loader {
