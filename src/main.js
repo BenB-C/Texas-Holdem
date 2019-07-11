@@ -9,7 +9,7 @@ import './imageImports.js';
 
 function displayCards(playerID, card1, card2) {
   let userCards = new Image();
-  $('#playerCards' + playerID).html(`<p>Player 2</p>`);
+  $('#playerCards' + playerID).html(`<p>Player ${playerID + 1}</p>`);
   userCards.src = `card${card1.value}Of${card1.suit}`;
   $('#playerCards' + playerID).append(`<img class="card" src='./Assets/${card1.value}-${card1.suit}.png'>`);
   userCards.src = `card${card2.value}Of${card2.suit}`;
@@ -104,26 +104,26 @@ function playNewHand(){
 
 function handleWinner() {
   if(game.players[0].hasFolded){
-    $(".show-winner").html("Player 1 has folded and Player 2 has won by default. <br>");
+    $(".show-message").html("<p>Player 1 has folded and Player 2 has won by default. </p>");
     return
   }
 
   if(game.players[1].hasFolded){
-    $(".show-winner").html("Player 2 has folded and Player 1 has won by default. <br>");
+    $(".show-message").html("<p>Player 2 has folded and Player 1 has won by default. </p>");
     return
   }
 
   let result = game.getWinner();
   console.log(result);
-  let toDisplay = "<p>";
+  let toDisplay;
   if(result.idx.length > 1){ //multiple winners
     result.idx.forEach(function(idx){
-      toDisplay += `Player ${result.idx+1} has tied for the win with a ${result.message}<br>`;
+      toDisplay += `<p>Player ${parseInt(result.idx)+1} has tied for the win with a ${result.message}</p>`;
     })
   } else {
-    toDisplay = `Player ${result.idx+1} has won the round with a ${result.message}<br>`;
+    toDisplay = `<p>Player ${parseInt(result.idx)+1} has won the round with a ${result.message}</p>`;
   }
-  $(".show-winner").html(toDisplay + "</p>");
+  $(".show-message").html(toDisplay);
 }
 
 function playNewRound(){
@@ -152,7 +152,7 @@ function playNewRound(){
   } else if (game.roundCount === 4){
     addCommunityCard(game.communityCards[4]);
   }
-  $(".show-winner").empty();
+  // $(".show-message").empty();
   let result = game.incTurn();
   handleResult(result);
   // flop
