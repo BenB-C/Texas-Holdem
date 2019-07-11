@@ -34,6 +34,7 @@ function displayChips(playerID, amount) {
 }
 
 function updateChipsDisplay() {
+  console.log('player bet = ', game.players[0].bet);
   game.players.forEach( (player, i) => {
     $('#playChips' + i).text(game.players[i].chips);
     $('#playBet' + i).text(game.players[i].bet);
@@ -86,6 +87,7 @@ function handleResult(result){
     handleWinner();
     // playNewHand(); TODO?
   } else {
+    game.resetBetting();
     playNewRound();
   }
 }
@@ -97,6 +99,16 @@ function playNewHand(){
 }
 
 function handleWinner() {
+  if(game.players[0].hasFolded){
+    $(".show-winner").html("Player 1 has folded and Player 2 has won by default. <br>");
+    return
+  }
+
+  if(game.players[1].hasFolded){
+    $(".show-winner").html("Player 2 has folded and Player 1 has won by default. <br>");
+    return
+  }
+
   let result = game.getWinner();
   console.log(result);
   let toDisplay = "<p>";
@@ -112,6 +124,8 @@ function handleWinner() {
 
 function playNewRound(){
   game.resetBetting();
+
+  updateChipsDisplay();
 
   game.deck = new Deck();
   game.dealCards(game.roundCount)
@@ -131,7 +145,7 @@ function playNewRound(){
       addCommunityCard(game.communityCards[2]);
   } else if (game.roundCount === 3){
     addCommunityCard(game.communityCards[3]);
-  } else {
+  } else if (game.roundCount === 4){
     addCommunityCard(game.communityCards[4]);
   }
   $(".show-winner").empty();
@@ -203,7 +217,8 @@ $(document).ready(function(){
     if(choice === "fold"){
       hideButtons();
       game.handleFold();
-      nextTurn();
+      // nextTurn();
+      handleWinner();
     } else if (choice === "call"){
       game.handleCall();
       nextTurn();
