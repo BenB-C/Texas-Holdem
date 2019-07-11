@@ -1,8 +1,20 @@
   body {
-  background-color: forestgreen;
+  background-color:DarkSlateGray  ;
   font-family: 'Signika Negative', sans-serif;
   font-size: 20px;
+  color: black;
+  /* background-image: url('../Assets/poker-table.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; */
 }
+
+/* .container {
+  background-image: url('../Assets/poker-table.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+} */
 
 .pokerHeader {
   text-align: center;
@@ -71,6 +83,20 @@
   height: 40px;
 }
 
+.container {
+      position: relative;
+      display: block;
+      background-size: 1700px auto;
+
+
+  background-image: url('../Assets/poker-table.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  width: 100%;
+      height: 100%;
+}
+
 .player-chips {
   text-align: center;
 }
@@ -96,6 +122,63 @@
 .display-bet-buttons {
   display: none;
 }
+@keyframes neonspark  {
+0% { text-shadow: none; }
+30% { text-shadow: 0 0 30px rgba(255,0,84,0.6); }
+60% {
+  text-shadow: 0 0 30px rgba(255,0,84,0.6),
+      0 0 60px rgba(255,0,84,0.4);
+  }
+80% { text-shadow: none; }
+100% {
+    text-shadow: 0 0 30px rgba(255,0,84,0.6),
+      0 0 60px rgba(255,0,84,0.4),
+      0 0 100px rgba(255,0,84,0.2),
+      0 0 90px rgba(255,0,84,0.1);
+  }
+}
+
+@font-face{
+  font-family:'Neon80sRegular';
+src: url('//thenewcode.com/assets/fonts/neon-webfont.woff') format('woff'),
+  url('/assets/fonts/neon-webfont.ttf') format('truetype');
+  font-weight:normal;
+  font-style:normal;
+}
+body { margin: 0; }
+h1#neon-tubing {
+  /* position: absolute; */
+  padding: 6rem;
+  text-align: center;
+  color: rgba(255,200,200,0.8);
+  font-family: Neon80s, sans-serif;
+  font-size: 11rem; letter-spacing: 2rem;
+  background-size: cover;
+}
+
+h1#neon-tubing {
+  position: absolute;
+  padding: 5px;
+  margin-left: 870px;
+
+  /* margin: 0; */
+  font-weight: 100;
+  text-align: center;
+  font-family: Neon80sRegular, sans-serif;
+  color: #fee;
+
+  text-transform: uppercase;
+  font-size: 6rem;
+  letter-spacing: 2rem;
+  animation: neonspark 1s 3s forwards;
+  text-shadow:
+    0 0 20px rgba(255,0,84,0.6),
+    0 0 40px rgba(255,0,84,0.4),
+    0 0 60px rgba(255,0,84,0.2),
+    0 0 80px rgba(255,0,84,0.1);
+}
+h1#neon-tubing span { animation: neonspark 4s 3s infinite;  }
+
 
 
 
@@ -105,4 +188,3 @@
   grid-template-columns: 20% 20% 20% 20% 20%;
   grid-template-rows: 20% 20% 20% 20% 20%;
   } */
-
