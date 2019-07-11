@@ -188,3 +188,13 @@ h1#neon-tubing span { animation: neonspark 4s 3s infinite;  }
   grid-template-columns: 20% 20% 20% 20% 20%;
   grid-template-rows: 20% 20% 20% 20% 20%;
   } */
+
+  .show-message {
+    text-align: center;
+    font-size: 20pt;
+    color: gold;
+  }
+
+  .show-message p {
+    padding: 0;
+  }

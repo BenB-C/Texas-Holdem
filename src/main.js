@@ -9,6 +9,7 @@ import './imageImports.js';
 
 function displayCards(playerID, card1, card2) {
   let userCards = new Image();
+  $('#playerCards' + playerID).html(`<p>Player 2</p>`);
   userCards.src = `card${card1.value}Of${card1.suit}`;
   $('#playerCards' + playerID).append(`<img class="card" src='./Assets/${card1.value}-${card1.suit}.png'>`);
   userCards.src = `card${card2.value}Of${card2.suit}`;
@@ -75,7 +76,8 @@ function handleResult(result){
     setTimeout(function(){
       //call ai function
       console.log('computer turn')
-      game.computerBet();
+      let computerBet = game.computerBet();
+      $(".show-message").html(`<p>${computerBet}</p>`);
       let result = game.incTurn();
       handleResult(result)
     }, 1500)
@@ -83,6 +85,8 @@ function handleResult(result){
       console.log('user turn')
     displayButtons();
   } else if(result === "roundDone"){
+    // display computer's cards
+    displayCards(1, game.players[1].hand[0], game.players[1].hand[1]);
     handleWinner();
     // playNewHand(); TODO?
   } else {
@@ -116,19 +120,15 @@ function playNewRound(){
   game.deck = new Deck();
   game.dealCards(game.roundCount)
   if (game.roundCount === 1) {
-      // display player0 cards
-      let player0 = game.players[0];
-      displayCards(0, player0.hand[0], player0.hand[1]);
-      console.log(player0.hand[0]);
-
-      // display player1 cards
-      let player1 = game.players[1];
-      displayFaceDownCards(1, player1.hand[0], player1.hand[1]);
-      console.log(player1.hand[0]);
+    // display user cards
+    let player0 = game.players[0];
+    displayCards(0, player0.hand[0], player0.hand[1]);
+    console.log(player0.hand[0]);
+    console.log(player0.hand[1]);
   } else if (game.roundCount === 2) {
-      addCommunityCard(game.communityCards[0]);
-      addCommunityCard(game.communityCards[1]);
-      addCommunityCard(game.communityCards[2]);
+    addCommunityCard(game.communityCards[0]);
+    addCommunityCard(game.communityCards[1]);
+    addCommunityCard(game.communityCards[2]);
   } else if (game.roundCount === 3){
     addCommunityCard(game.communityCards[3]);
   } else {
@@ -199,12 +199,13 @@ $(document).ready(function(){
   $(".bet-button").click(function(){
     let choice = $(this)[0].id;
     //do work
-
     if(choice === "fold"){
+      $(".show-message").text('');
       hideButtons();
       game.handleFold();
       nextTurn();
     } else if (choice === "call"){
+      $(".show-message").text('');
       game.handleCall();
       nextTurn();
     } else if(choice === "raise"){
@@ -213,6 +214,7 @@ $(document).ready(function(){
       $('#raiseForm').show();
       // game.handleRaise();
     } else if(choice === "check"){
+      $(".show-message").text('');
       game.handleCheck();
       nextTurn();
     }
@@ -222,6 +224,7 @@ $(document).ready(function(){
   // Remove raise from player chips, add to player bet
 
   $('#submitBet').click(function(event){
+    $(".show-message").text('');
     event.preventDefault();
     $("#raiseForm").hide();
 
