@@ -207,13 +207,14 @@ $(document).ready(function(){
 //   displayButtons();
 
   // user is first
-  $(".start-game").click(function(){
+  $("#loader").click(function(){
+    $('#loader').hide();
     $(this).hide();
   $(".round-count").show();
     updateChipsDisplay();
     playNewHand();
 
-  })
+})
 
   $(".bet-button").click(function(){
     let choice = $(this)[0].id;
