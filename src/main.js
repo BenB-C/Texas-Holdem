@@ -33,6 +33,15 @@ function displayChips(playerID, amount) {
 
 }
 
+function updateChipsDisplay() {
+  game.players.forEach( (player, i) => {
+    $('#playChips' + i).text(game.players[i].chips);
+    $('#playBet' + i).text(game.players[i].bet);
+  });
+  $('#potChips').text(game.pot);
+  console.log("chips display updated");
+}
+
 // Create players
 let numberOfPlayers = 2;
 let players = [];
@@ -61,6 +70,7 @@ function hideButtons(){
 }
 
 function handleResult(result){
+  updateChipsDisplay();
   if(result === "computerTurn"){
     setTimeout(function(){
       //call ai function
@@ -131,10 +141,6 @@ $(document).ready(function(){
 
 //   // Start game
 
-let addInitialChips = new Player();
-game.players.forEach( (player, i) => {
-  $('#playChips' + i).text(game.players[i].chips);
-})
 
 
 //   game.dealCards(2, true);
@@ -167,6 +173,7 @@ game.players.forEach( (player, i) => {
   // user is first
   $(".start-game").click(function(){
     $(this).hide();
+    updateChipsDisplay();
     playNewHand();
 
   })
