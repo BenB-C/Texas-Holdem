@@ -44,7 +44,7 @@ export class Game {
           player.hand.push(nextCard);
           console.log("player " + idx + " was dealt " + nextCard);
         }, this);
-      } else {
+      } else if (this.roundCount <= 3){
         this.communityCards.push(this.deck.nextCard());
       }
     }
@@ -161,7 +161,8 @@ export class Game {
 
     this.betsNeeded = this.players.length;
     this.players.forEach(function(player){
-      player.hasFolded = false;
+      player.bet = 0;
+      //player.hasFolded = false;
     })
   }
 
@@ -181,6 +182,7 @@ export class Game {
 
   handleFold(){
     this.players[this.currentlyBettingIndex].hasFolded = true;
+
   }
 
   handleCall(){
