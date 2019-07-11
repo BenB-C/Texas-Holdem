@@ -187,7 +187,7 @@ h1#neon-tubing {
   text-transform: uppercase;
   font-size: 6rem;
   letter-spacing: 2rem;
-  animation: neonspark 3  s 3s forwards;
+  animation: neonspark .25ms  0.25Ms forwards;
   text-shadow:
   0 0 20px rgba(255,0,84),
   0 0 40px rgba(255,0,84, 1),
