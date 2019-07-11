@@ -79,10 +79,10 @@ export class Game {
       //fold
       console.log("computer choice = Folded");
       this.handleFold();
-      return;
+      return "Computer folded";
     } else if(randPercToDecideCallCheck === 2 || turn.amountToBet === 0){
       //call or check
-      this.eitherCallOrCheck(turn);
+      return this.eitherCallOrCheck(turn);
     } else {
       //raise
       let randPerc = Math.floor(Math.random() * 80) + 19; //between 20%-99%
@@ -92,23 +92,26 @@ export class Game {
       if(randomBet > 4){
         console.log("computer choice = raise: ", randomBet);
         this.handleRaise(randomBet);
+        return "Computer raises " + randomBet;
       } else {
-        this.eitherCallOrCheck(turn);
+        return this.eitherCallOrCheck(turn);
       }
 
     }
 
     console.log("computer turn.bet", turn.bet);
-
+    return "Computer bet " + turn.bet;
   }
 
   eitherCallOrCheck(turn){
     if(turn.bet - this.currentBet === 0){
-      console.log("computer choice = checked");
+      console.log("computer choice = checkes");
       this.handleCheck();
+      return "Computer checked";
     } else {
       console.log("computer choice = called");
       this.handleCall();
+      return "Computer calls";
     }
   }
 
