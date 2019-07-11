@@ -73,9 +73,9 @@ function handleResult(result){
       console.log('user turn')
     displayButtons();
   } else if(result === "roundDone"){
-    playNewRound();
-  } else {
     playNewHand();
+  } else {
+    playNewRound();
   }
 }
 
@@ -116,6 +116,12 @@ function playNewRound(){
   // }
   // $(".show-winner").html(toDisplay + "</p>");
 
+}
+
+function nextTurn(){
+  hideButtons();
+  let result = game.incTurn();
+  handleResult(result);
 }
 
 
@@ -178,8 +184,10 @@ game.players.forEach( (player, i) => {
     if(choice === "fold"){
       hideButtons();
       game.handleFold();
+      nextTurn();
     } else if (choice === "call"){
       game.handleCall();
+      nextTurn();
     } else if(choice === "raise"){
       // get amount from user input
 
@@ -187,18 +195,19 @@ game.players.forEach( (player, i) => {
       // game.handleRaise();
     } else if(choice === "check"){
       game.handleCheck();
+      nextTurn();
     }
-    hideButtons();
-    let result = game.incTurn();
-    handleResult(result);
+
   });
 
   // Remove raise from player chips, add to player bet
 
-  $('#submitBet').click(function(){
+  $('#submitBet').click(function(event){
+    event.preventDefault();
     $("#raiseForm").hide();
 
     game.handleRaise(parseInt($('#raiseBet').val()));
+    nextTurn();
     console.log($('#raiseBet').val());
   });
 

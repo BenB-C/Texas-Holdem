@@ -32,23 +32,24 @@ export class Game {
   }
 
   dealCards(roundCount) {
+    console.log("dealCards roundCount", this.roundCount);
     let numberOfCards = this.roundCardNum[roundCount]
-    let isFirstDeal = roundCount > 0;
+    let isFirstDeal = this.roundCount === 0;
     let cards = this.deck.cards;
     let communityCards = this.communityCards;
     for (let i = 0; i < numberOfCards; i++) {
       if (isFirstDeal) {
         this.players.forEach((player, idx) => {
           let nextCard = this.deck.nextCard();
-          player.hand.push(this.deck.nextCard());
-          console.log("player " + idx + " was dealt " + player.hand.toString());
+          player.hand.push(nextCard);
+          console.log("player " + idx + " was dealt " + nextCard);
         }, this);
       } else {
         this.communityCards.push(this.deck.nextCard());
       }
     }
     console.log("CommunityCards", communityCards.toString());
-    this.players.forEach(player => console.log(player.hand.toString()));
+    this.players.forEach((player, idx) => console.log("Player" + idx + "has: " + player.hand.toString()));
 
     this.roundCount += 1;
   }
@@ -66,8 +67,11 @@ export class Game {
       turn.amountToBet = this.chooseBet();
 
 
+    let randPercToDecideFold = 1;
+    if(this.currentBet !== 0){
+      randPercToDecideFold = Math.floor(Math.random() * 6); //between 20%-99%
+    }
 
-    let randPercToDecideFold = Math.floor(Math.random() * 6); //between 20%-99%
     let randPercToDecideCallCheck = Math.floor(Math.random() * 2); //between 20%-99%
     if(randPercToDecideFold === 0){
       //fold
@@ -76,24 +80,34 @@ export class Game {
       return;
     } else if(randPercToDecideCallCheck === 2 || turn.amountToBet === 0){
       //call or check
-      if(turn.bet - this.currentBet === 0){
-        console.log("computer choice = checked");
-        this.handleCheck();
-      } else {
-        console.log("computer choice = called");
-        this.handleCall();
-      }
+      this.eitherCallOrCheck(turn);
     } else {
       //raise
       let randPerc = Math.floor(Math.random() * 80) + 19; //between 20%-99%
       let randomBet = Math.floor(turn.amountToBet * (randPerc/100));
-      console.log("computer choice = raise: ", randomBet);
       turn.amountToBet -= randomBet;
-      this.handleRaise(randomBet);
+
+      if(randomBet > 4){
+        console.log("computer choice = raise: ", randomBet);
+        this.handleRaise(randomBet);
+      } else {
+        this.eitherCallOrCheck(turn);
+      }
+
     }
 
     console.log("computer turn.bet", turn.bet);
 
+  }
+
+  eitherCallOrCheck(turn){
+    if(turn.bet - this.currentBet === 0){
+      console.log("computer choice = checked");
+      this.handleCheck();
+    } else {
+      console.log("computer choice = called");
+      this.handleCall();
+    }
   }
 
   chooseBet(){
@@ -110,8 +124,19 @@ export class Game {
     return totalBet;
   }
 
+  checkPlayersStillIn(){
+    let count = 0;
+    this.players.forEach(function(player){
+      if(!player.hasFolded)
+        ++count;
+    })
+    return count;
+  }
+
   incTurn(){
     //TODO: check if everyone has folded, or if roundCount = 4, and if so end hand
+    if(this.checkPlayersStillIn() < 2 || this.roundCount === 4) return "roundDone";
+
     this.currentlyBettingIndex = (this.currentlyBettingIndex + 1) % this.players.length;
     if(this.betsNeeded > 0){
       if (!this.players[this.currentlyBettingIndex].hasFolded){
@@ -132,6 +157,8 @@ export class Game {
 
   resetBetting(){
     this.currentBet = 0;
+    this.currentlyBettingIndex = 1;
+
     this.betsNeeded = this.players.length;
     this.players.forEach(function(player){
       player.hasFolded = false;
@@ -170,7 +197,7 @@ export class Game {
     if(!amount) amount = 100;
     let stillIn = 0;
     // this.players.forEach(function())
-    this.betsNeeded = this.players.length;
+    this.betsNeeded = this.players.length-1;
     console.log('bet Placed', this.currentBet+amount);
     let bettingPlayer = this.players[this.currentlyBettingIndex];
     let amountToCall = this.currentBet - bettingPlayer.bet;
