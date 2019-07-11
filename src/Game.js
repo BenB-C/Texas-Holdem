@@ -135,7 +135,7 @@ export class Game {
 
   incTurn(){
     //TODO: check if everyone has folded, or if roundCount = 4, and if so end hand
-    if(this.checkPlayersStillIn() < 2 || this.roundCount === 4) return "roundDone";
+    if(this.checkPlayersStillIn() < 2 || this.roundCount === 5) return "roundDone";
 
     this.currentlyBettingIndex = (this.currentlyBettingIndex + 1) % this.players.length;
     if(this.betsNeeded > 0){
