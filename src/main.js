@@ -152,7 +152,7 @@ function playNewRound(){
   } else if (game.roundCount === 4){
     addCommunityCard(game.communityCards[4]);
   }
-  $(".show-message").empty();
+  // $(".show-message").empty();
   let result = game.incTurn();
   handleResult(result);
   // flop

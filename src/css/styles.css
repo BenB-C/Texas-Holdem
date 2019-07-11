@@ -81,11 +81,11 @@ padding: 10px 10px;
 #raiseForm {
   display: none;
   margin-top: 20px;
-
-}
-
-#raiseForm {
   text-align: center;
+  position: fixed;
+  bottom: 7%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 #submitBet, #raiseBet {
