@@ -171,19 +171,6 @@ export class Game {
     })
   }
 
-  // takeBet(playerIdx) {
-  //   //$(".display-bet-buttons").hide();
-  //   if(!this.players[playerIdx].hasFolded){
-  //     if (this.players[playerIdx].isComputer) {
-  //       this.currentPlayerComp = true;
-  //     } else {
-  //       this.currentPlayerComp = false;
-  //       //$(".display-bet-buttons").show();
-  //     }
-  //   }
-  //   console.log('pot', this.pot);
-  //   console.log('currentBet', this.currentBet);
-  // }
 
   handleFold(){
     this.players[this.currentlyBettingIndex].hasFolded = true;

@@ -81,7 +81,7 @@ function handleResult(result){
       $(".show-message").html(`<p>${computerBet}</p>`);
       let result = game.incTurn();
       handleResult(result)
-    }, 1500)
+    }, 800)
   } else if(result === "userTurn"){
       console.log('user turn')
     displayButtons();
@@ -155,17 +155,6 @@ function playNewRound(){
   // $(".show-message").empty();
   let result = game.incTurn();
   handleResult(result);
-  // flop
-  // game.dealCards(3);
-  // game.incTurn();
-  // // river
-  // game.dealCards(1);
-  // game.incTurn();
-  // // turn
-  // game.dealCards(1);
-  // game.incTurn();
-  // //
-
 
 }
 
@@ -177,44 +166,15 @@ function nextTurn(){
 
 
 $(document).ready(function(){
-//   // test displayCards
-//   let playerIndex = 0;
-//   let card1 = new Card("Ace", "Diamonds");
-//   let card2 = new Card("Queen", "Spades");
-//   displayCards(playerIndex, card1, card2);
-//   // test displayChips
-//   let amountOfChips = 2000;
-// //   displayChips(playerIndex, amountOfChips);
-
-//   // Start game
-
-
-
-//   game.dealCards(2, true);
-
-
-//   // deal 3 more cards
-
-//   game.dealCards(3);
-
-//
-
-
-
-//   // display cards dealt
-
-
-//   displayButtons();
-
   // user is first
-  $("#loader").click(function(){
-    $('#loader').hide();
-    $(this).hide();
+  $('#loader').hide();
   $(".round-count").show();
-    updateChipsDisplay();
-    playNewHand();
+  playNewHand();
 
-})
+  $(".replay-round-button").click(function(){
+    location.reload();
+  })
+
 
   $(".bet-button").click(function(){
     let choice = $(this)[0].id;
@@ -224,6 +184,7 @@ $(document).ready(function(){
       hideButtons();
       game.handleFold();
       // nextTurn();
+      $(".replay-round-button").show();
       handleWinner();
     } else if (choice === "call"){
       $(".show-message").text('');

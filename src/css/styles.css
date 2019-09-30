@@ -9,15 +9,23 @@ body {
   background-position: center; */
 }
 
+h1 {
+  text-align: center;
+  min-width: 1000px;
+  position: fixed;
+  right: 50%;
+  transform: translate(53%, -30%);
 
-/* .pokerHeader {
+}
+
+.pokerHeader {
 text-align: center;
 font-family: 'Russo One', sans-serif;
 font-size: 40px;
 background-color: beige;
 border-radius: 50px;
 padding: 10px 10px;
-} */
+}
 
 .round-count {
   display: none;
@@ -49,7 +57,7 @@ padding: 10px 10px;
   padding-top: 50px;
 }
 
-.display-bet-buttons, .start-game {
+.display-bet-buttons, .replay-round-button, .start-game {
   text-align: center;
   margin-top: 40px;
 }
@@ -73,6 +81,12 @@ padding: 10px 10px;
 }
 
 #raise {
+  font-size: 40px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+#replay {
   font-size: 40px;
   border-radius: 20px;
   padding: 10px;
@@ -149,9 +163,18 @@ padding: 10px 10px;
 .display-bet-buttons {
   display: none;
   position: fixed;
-  bottom: 1%;
-  right: 43%;
+  bottom: 10%;
+  right: 50%;
+  transform: translate(-53%, 0%);
 }
+.replay-round-button {
+  display: none;
+  position: fixed;
+  bottom: 10%;
+  right: 50%;
+  transform: translate(-53%, 0%);
+}
+
 @keyframes neonspark  {
   0% { text-shadow: none; }
   30% { text-shadow: 0 0 30px rgba(255,0,84,0.6); }
